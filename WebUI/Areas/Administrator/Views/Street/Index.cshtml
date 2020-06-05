@@ -1,0 +1,40 @@
+﻿@model List<Street>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>@ViewBag.RoadName Caddesine Ait  Sokaklar</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Sokak</th>
+                <th>Durumu</th>
+                <th>Sil/Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (Street item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "Street", new { id = item.ID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Güncelle", "Update", "Street", new { id = item.ID }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Binalar", "Index", "Build", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "Street", new { id = ViewBag.RoadID }, new { @class = "btn btn-info" })
+
+            </td>
+        </tr>
+    </table>
+</div>

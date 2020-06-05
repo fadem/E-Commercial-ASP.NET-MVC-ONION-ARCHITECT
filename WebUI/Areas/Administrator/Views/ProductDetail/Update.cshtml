@@ -1,0 +1,32 @@
+﻿@model ProductDetail
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2> Ürün Detayı Güncelle -  @ViewBag.ProductName </h2>
+
+    @using (Html.BeginForm("Update", "ProductDetail", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.ProductID)
+
+        <div>
+            <label>Bedeni:</label>
+
+            @Html.DropDownListFor(m => m.SizeToID, null, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div>
+            <label>Rengi:</label>
+
+
+            @Html.DropDownListFor(m => m.ColourID, null, htmlAttributes: new { @class = "form-control" })
+
+
+        </div>
+        <div>
+            <label>Stok Miktarı:</label>
+            @Html.TextBoxFor(m => m.UnitInStock, new { @type = "number" ,min="1", max="20" })
+        </div>
+        <button type="submit">Güncelle</button>
+    }
+</div>

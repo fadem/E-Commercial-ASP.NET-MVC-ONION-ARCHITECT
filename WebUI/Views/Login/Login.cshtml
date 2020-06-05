@@ -1,0 +1,181 @@
+﻿@model AppUser
+@{
+    ViewBag.Title = "Login";
+ 
+}
+
+<body class="  customer-account-login rtl" style="">
+    <div id="page">
+        <div class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-title" style="font-family:Arial" lang="tr">
+                            <h2 style="font-family:Arial" lang="tr">Giriş Yap veya Kaydol</h2>
+                        </div>
+                    </div>
+                    <!--col-xs-12-->
+                </div>
+                <!--row-->
+            </div>
+            <!--container-->
+        </div>
+
+
+        <!-- BEGIN Main Container -->
+
+        <div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">
+
+            <div class="main">
+                <div class="account-login container">
+                    <!--page-title-->
+
+
+                    <fieldset class="col2-set">
+
+                        @using (Html.BeginForm("Insert", "AppUser", new { area = "Administrator" }, FormMethod.Post))
+                        {
+                            <div class="col-1 new-users">
+
+                                <button type="button" class="button" id="hesap" style="font-family:Arial">Hesap Oluştur</button>
+
+
+                            </div>
+
+                        }
+
+
+                        @if (Session["oturum"] != null || Session["admin"] != null)
+                        {
+                            AppUser user = new AppUser();
+                            if(Session["oturum"]!=null)
+                            {
+                               user = (AppUser)Session["oturum"];
+
+                            }
+                            else if ( Session["admin"] != null)
+                            {
+                                user = (AppUser)Session["admin"];
+
+                            }
+
+                            <div class="col-2 giris">
+                                <div class="content">
+                                    <ul class="form-list">
+                                        <li>
+                                            <label for="userName" style="font-size:30px;">@user.Name @user.SurName ( @Html.ActionLink("Çıkış Yap","Logout","Login") )</label>
+                                           
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                                </div>
+                                }
+                                else
+                                {
+                                using (Html.BeginForm("Login", "Login", FormMethod.Post))
+                                {
+                                    <div class="col-2 giris">
+                                        <strong style="font-family:Arial" lang="tr">Üye Olarak Giriş Yap</strong>
+                                        <div class="content">
+
+                                            <ul class="form-list">
+                                                <li>
+                                                    <label for="userName">Kullanıcı Adı<em class="required">*</em></label>
+                                                    <div class="input-box">
+
+                                                        @Html.TextBoxFor(m => m.UserName, new { @class = "input-text ", required = "required-entry" })
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <label for="pass">Şifre<em class="required">*</em></label>
+                                                    <div class="input-box">
+
+                                                        @Html.TextBoxFor(m => m.Password, new { @class = "input-text", required = "required-entry", type = "password" })
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="remember-me-popup">
+                                                <div class="remember-me-popup-head" style="display:none">
+                                                    <h3 id="text2">What's this?</h3>
+                                                    <a href="#" class="remember-me-popup-close" onClick="showDiv()" title="Close">Close</a>
+                                                </div>
+                                                <div class="remember-me-popup-body" style="display:none">
+                                                    <p id="text1">Checking "Remember Me" will let you access your shopping cart on this computer when you are logged out</p>
+                                                    <div class="remember-me-popup-close-button a-right">
+                                                        <a href="#" class="remember-me-popup-close button" title="Close" onClick="
+            showDiv()"><span>Close</span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <div class="buttons-set">
+
+                                                <button type="submit" class="button login" title="Giriş Yap" style="font-family:Arial" lang="tr"><span><b>Giriş Yap</b></span></button>
+                                                @if (ViewBag.Message != null)
+                                                {
+
+                                                    <a href="#" class="forgot-word">(@ViewBag.Message) Şifrenizi mi unuttunuz?</a>
+
+                                                }
+                                                else
+                                                {
+                                                    <a href="#" class="forgot-word"> Şifrenizi mi unuttunuz?</a>
+
+                                                }
+
+                                            </div> <!--buttons-set-->
+                                        </div> <!--content-->
+                                    </div> <!--col-2 registered-users-->
+                                }
+                                }
+
+
+</fieldset> <!--col2-set-->
+
+
+                </div> <!--account-login-->
+
+            </div><!--main-container-->
+        </div> <!--col1-layout-->
+        <!-- For version 1,2,3,4,6 -->
+        <!-- End For version 1,2,3,4,6 -->
+    </div>
+</body>
+<script>
+
+        $("#hesap").click(function () {
+            $(".new-users").empty();
+            $(".new-users").append('<strong style="font-family:Arial">Hesap Oluştur</strong>                <div class="content">      <ul class="form-list">                  <li>                            <label> Adı<em class="required">*</em></label>                            <div lass="input-box">                                @Html.TextBoxFor(m => m.Name, new { @class = "input-text required-entry form-control", required = "required-entry" , onkeypress = "return event.charCode >= 64 && event.charCode<=90 || event.charCode >= 97 && event.charCode<=122 ", style ="text-transform:uppercase" })                                            </div>                        </li>                        <li>                            <label for="pass">Soyadı<em class="required">*</em></label>                            <div class="input-box">                                @Html.TextBoxFor(m => m.SurName, new { @class = "input-text required-entry form-control", required = "required-entry", onkeypress = "return event.charCode >= 64 && event.charCode<=90 || event.charCode >= 97 && event.charCode<=122 ", style = "text-transform:uppercase" })                                            </div>                        </li>                        <li>                            <label for="pass">Kullanıcı Adı<em class="required">*</em></label>                            <div class="input-box">                                @Html.TextBoxFor(m => m.UserName, new { @class = "input-text required-entry form-control", required = "required-entry" })                                            </div>                        </li>                                              <li>                            <label for="pass">Şifre<em class="required">*</em></label>                            <div class="input-box">                               @Html.TextBox("Sifre", null, new { @class = "input-text required-entry form-control", required = "required-entry", type = "password" })                                            </div>                        </li>                        <li id="hata">                            <label for="pass">Şifre Tekrar<em class="required">*</em></label>                          <div  class="input-box">                  @Html.TextBoxFor(m => m.Password, new { @class = "input-text required-entry form-control", required = "required-entry", type="password" })                                            </div>                        </li>    <li>                            <label for="pass">Email Adres<em class="required">*</em></label>                            <div class="input-box">                                @Html.TextBoxFor(m => m.EmailAddress, new { @class = "input-text required-entry form-control", required = "required-entry", validate="email", type="email" })                                            </div>                        </li>                      <li>                            <label for="pass">Telefon Numarası<em class="required">*</em></label>                            <div class="input-box">  @Html.TextBoxFor(m => m.Phone, new { @class = "input-text required-entry form-control", required = "required-entry", onkeypress = "return event.charCode >= 48 && event.charCode<=57", ondrop = "return false", min = "0", max = "10", step = "2", maxlength = "11" })                                    </div>                        </li>                        <li>                            <label for="pass">Doğum Tarihi</label>                            <div class="input-box">                                @Html.TextBoxFor(m => m.BirthDate, new { @class = "input-text  form-control" ,type="date" ,required= "required-entry" })                                            </div>                        </li>                                                    </ul > <br>                                </div>  <button  type="submit" class="button "><span>Kayıt Ol</span></button>        ')
+
+            $("#Password").change(function () {
+                    var ilk = $("#Sifre").val();
+                    var son = $("#Password").val();
+                    if (ilk != son) {
+                    $("#Sifre").val('');
+                    $("#Password").val('');
+                        alert("Şifreler Uyuşmuyor!!!");
+
+                        return false;
+                    }
+                    else
+                        return true;
+
+                })
+
+
+        })
+            
+       
+</script>
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+@section scripts{
+
+}

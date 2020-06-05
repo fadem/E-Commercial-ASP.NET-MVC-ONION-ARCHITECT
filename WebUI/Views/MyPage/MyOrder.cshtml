@@ -1,0 +1,105 @@
+﻿@model List<Order>
+@{
+    ViewBag.Title = "MyOrder";
+}
+
+
+<div class="container" style="margin:50px auto;">
+    <div class="col-md-2">
+        <ul class="form-list">
+
+            <li>
+                <div class="input-box">
+                    @Html.ActionLink("Hesabım", "Index", "MyPage", null, new { @class = "btn btn-default" })
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    @Html.ActionLink("Adreslerim", "MyAddress", "MyPage", new { id = "asd" }, new { @class = "btn btn-default" })
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    @Html.ActionLink("Favorilerim", "WishList", "MyPage", new { id = "asd" }, new { @class = "btn btn-default" })
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class=" col col-md-9">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Alıcı</th>
+                    <th>Sipariş Tarihi</th>
+
+                    <th>Kargo Firması</th>
+                    <th>Ürün</th>
+                    <th>Tutar</th>
+                    <th>Adres Bilgileri</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count < 1)
+                {
+                    <tr>
+                        <td colspan="7" align="center">Siparişiniz bulunmamaktadır</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (Order item in Model)
+                    {
+                        if (item.Status != Core.Entity.Enum.Status.Deleted)
+                        {
+                    <tr>
+
+                        <td>@item.AppUser.Name</td>
+                        <td>@item.OrderDate</td>
+                        <td>@item.Ship.CompanyName</td>
+                        @foreach (OrderDetail detay in item.OrderDetails)
+                        {
+                            if (item.ID == detay.OrderID)
+                            {
+                                <td><a href="@Url.Action("GoodsDetail","Home", new {id=detay.ProductID})">   @detay.Product.ProductName</a>
+                      </td>
+                                <td>@detay.Price</td>
+
+                            }
+
+                        }
+                        <td>
+                            @item.ShipAddress
+                            <ul>
+                                <li>
+                                    İl : @item.Province.Name
+                                </li>
+                                <li>
+                                    İlçe : @item.RegionTo.Name
+                                </li>
+                                <li>
+                                    Mahalle : @item.District.Name
+                                </li>
+                                <li>
+                                    Cadde : @(item.Road != null ? item.Road.Name : "-")
+                                </li>
+                                <li>
+                                    Sokak : @(item.Street != null ? item.Street.Name : "-" )
+                                </li>
+                                <li>
+                                    Bina :  @(item.Build != null ? item.Build.Name : "-" )
+                                </li>
+
+                            </ul>
+                        </td>
+
+                    </tr>
+
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

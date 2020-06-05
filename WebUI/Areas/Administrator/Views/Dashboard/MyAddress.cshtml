@@ -1,0 +1,60 @@
+﻿@model List<Address>
+
+@{
+    ViewBag.Title = "MyAddress";
+}
+
+<div class="container" style="margin:50px auto;">
+    <div class="col-md-3" style="margin-top:50px">
+        <ul>
+            <li>@Html.ActionLink("Hesabım", "Index", new { id = ViewBag.AppUserID }, new { @class = "btn btn-default" })</li>
+            <li>@Html.ActionLink("Siparişlerim", "MyOrder", "MyPage", new { id = ViewBag.AppUserID }, new { @class = "btn btn-default" })</li>
+            <li>@Html.ActionLink("Favorilerim", "Index", new { id = ViewBag.AppUserID }, new { @class = "btn btn-default" })</li>
+        </ul>
+    </div>
+    <div class="col-md-9 " style="margin-top:0">
+        <h3>Adres Bilgilerim</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>İl</th>
+                    <th>İlçe</th>
+                    <th>Mahalle</th>
+                    <th>Posta Numarası</th>
+                    <th>Cadde</th>
+                    <th>Sokak</th>
+                    <th>Bina Adı</th>
+                    <th>Sil/Güncelle</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Address item in Model)
+                {
+                    if (item.Status != Core.Entity.Enum.Status.Deleted)
+                    {
+                        <tr>
+                            <td>@item.Province.Name</td>
+                            <td>@item.RegionTo.Name</td>
+                            <td>@item.District.Name</td>
+                            <td>@item.District.PostalCode</td>
+                            <td>@item.Road.Name</td>
+                            <td>@item.Street.Name</td>
+                            <td>@item.Build.Name</td>
+                            <td>
+                                @Html.ActionLink("Sil", "Delete", "Address", new { id = item.ID, area = "Administrator" }, new { @class = "btn btn-default" })
+                                @Html.ActionLink("Güncelle", "UpdateAddress", "MyPage", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Ekle", "Insert", "Address", new { id = ViewBag.AppUserID, area = "Administrator" }, new { @class = "btn btn-default" })
+
+    </div>
+
+</div>
+
+

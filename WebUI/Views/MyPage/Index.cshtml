@@ -1,0 +1,304 @@
+﻿@model Tuple<List<ShoppingCart>, AppUser>
+@{
+    ViewBag.Title = "Index";
+
+}
+@if (Session["admin"] == null && Session["oturum"] == null)
+{
+    Response.RedirectPermanent("/Login/Login");
+
+
+}
+<div id="page">
+    <div class="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    @if (ViewBag.Sifre != null)
+                    {
+                        <div class="page-title">
+                            <h2 style="font-family: Arial, sans-serif">@ViewBag.Sifre</h2>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="page-title">
+                            <h2 style="font-family: Arial, sans-serif; font-language-override:normal">Merhaba @Model.Item2.Name @Model.Item2.SurName</h2>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="main-container col2-right-layout">
+        <div class="main container">
+            <div class="row">
+                <!--col-main col-sm-9 wow bounceInUp animated-->
+                <aside class="col-right sidebar col-sm-3 col-xs-12 wow bounceInUp animated animated" style="visibility: visible;">
+                    <div class="block block-account">
+                        <div class="block-title"> Hesabım </div>
+                        <div class="block-content">
+                            <ul>
+                                @if (Model.Item2.IsAdministrator == true)
+                                {
+                                    <li><a href="@Url.Action("MyAddress","MyPage",new {id=Model.Item2.ID , area=""     })"><span> Adres Bilgileri</span></a></li>
+                                    <li><a href="@Url.Action("MyOrder","MyPage",new { id=Model.Item2.ID ,area=""     })"><span> Siparişlerim</span></a></li>
+                                    <li><a href="@Url.Action("Index","Product",new {id=Model.Item2.ID, area="Administrator"     })"><span> Ürünlerim</span></a></li>
+                                    <li><a href="@Url.Action("WishList","MyPage",new {id=Model.Item2.ID , area=""     })"><span> Favorilerim</span></a></li>
+                                }
+                                else if (Model.Item2.IsPageAdmin == true)
+                                {
+                                    <li><a href="@Url.Action("Index","Address",new { area="Administrator"})"><span> Adres Bilgileri</span></a></li>
+                                    <li><a href="@Url.Action("Index","AppUser",new { area="Administrator"})"><span> Üye Bilgileri</span></a></li>
+                                    <li><a href="@Url.Action("Index","Brand",new { area="Administrator"})"><span> Marka Bilgileri</span></a></li>
+                                    <li><a href="@Url.Action("Index","Province",new { area="Administrator"})"><span> Adres Kayıtları</span></a></li>
+
+                                    <li><a href="@Url.Action("Index","Category",new { area="Administrator"})"><span> Kategori Bilgileri</span></a></li>
+                                    <li><a href="@Url.Action("Index","Colour",new { area="Administrator"})"><span> Ürün Renk Bilgileri</span></a></li>
+
+
+
+                                    <li><a href="@Url.Action("Index","Ship",new { area="Administrator"})"><span> Kargo Bilgileri</span></a></li>
+
+                                    <li><a href="@Url.Action("Index","SizeTo",new { area="Administrator"})"><span> Beden Bilgileri</span></a></li>
+                                    <li><a href="@Url.Action("Index","Message",new { area="Administrator"})"><span> Mesajlarım </span></a></li>
+
+
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("MyAddress","MyPage",new {id=Model.Item2.ID , area=""     })"><span> Adres Bilgileri</span></a></li>
+                                    <li><a href="@Url.Action("MyOrder","MyPage",new {id=Model.Item2.ID , area=""     })"><span> Siparişlerim</span></a></li>
+
+                                    <li><a href="@Url.Action("WishList","MyPage",new {id=Model.Item2.ID , area=""     })"><span> Favorilerim</span></a></li>
+                                }
+                            </ul>
+                        </div>
+
+                        <!--block-content-->
+                    </div>
+                    <div class="block block-account">
+                        <div class="block-title">Temsilci Bilgileri</div>
+                        <div class="block-content tem">
+
+
+
+                            <ul>
+                                <li><a id="bilgi-guncelle"><span>  Bilgilerimi Güncelle</span></a> </li>
+                                <li>
+                                    <label><b>Ad:  </b>@Model.Item2.Name</label>
+
+                                </li>
+                                <li>
+                                    <label><b>SoyAd:</b>@Model.Item2.SurName</label>
+
+                                </li>
+                                <li>
+                                    <label><b>Kullanıcı Adı:</b>@Model.Item2.UserName</label>
+
+                                </li>
+                                <li>
+                                    <label><b>Email Adres:</b> @Model.Item2.EmailAddress</label>
+
+                                </li>
+                                <li>
+                                    <label><b>Doğum Tarihi:</b>  @Model.Item2.BirthDate</label>
+
+                                </li>
+
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <!--block block-account-->
+
+                </aside>
+                <section class="col-main col-sm-9 col-xs-12 wow bounceInUp animated animated" style="visibility: visible;">
+                    <div class="my-account">
+
+                        <!--page-title-->
+                        <!-- BEGIN DASHBOARD-->
+                        @if (Session["admin"] != null)
+                                    {
+                                        AppUser kullanici = (AppUser)Session["admin"];
+                                        OrderDetailService ods = new OrderDetailService();
+                                        OrderService os = new OrderService();
+                                        AppUserService aus = new AppUserService();
+                                        CommentService cms = new CommentService();
+                                        ProductService ps = new ProductService();
+                                        MessageService ms = new MessageService();
+                                        if (kullanici.IsPageAdmin == true)
+                                        {
+                                <div class="dashboard">
+                                    <div class="col-md-3" style="background-color:red; height:200px; border-radius:50px; margin:10px 10px;">
+                                        <label style="margin-left:25px; width:150px; height:20px; color:white; text-align:center; margin-top:90px; margin-bottom:90px; font-size:20px;"><b>Üye  : @aus.GetActive().Count</b> </label>
+                                    </div>
+                                    <div class="col-md-3" style="background-color:blue; height:200px;border-radius:50px; margin:10px 10px;">
+                                        <label style="margin-left:25px; width:150px; height:20px; color:white; text-align:center; margin-top:90px; margin-bottom:90px; font-size:20px;"><b>Tedarikçi  : @aus.GetDefault(m => m.IsAdministrator == true).Count</b> </label>
+                                    </div>
+                                    <div class="col-md-3" style="background-color:green; height:200px;border-radius:50px; margin:10px 10px;">
+                                        <label style="margin-left:25px; width:150px; height:20px; color:white; text-align:center; margin-top:90px; margin-bottom:90px; font-size:20px;"><b>Yorum : @cms.GetActive().Count</b> </label>
+                                    </div>
+                                    <div class="col-md-3" style="background-color:blue; height:200px; border-radius:50px; margin:10px 10px;">
+                                        <label style="margin-left:25px; width:150px; height:20px; color:white; text-align:center; margin-top:90px; margin-bottom:90px; font-size:20px;"><b>Ürün : @ps.GetDefault(m=> m.Status!=Core.Entity.Enum.Status.Deleted).Count</b> </label>
+                                    </div>
+
+                                    <div class="col-md-3" style="background-color:green; height:200px; border-radius:50px; margin:10px 10px;">
+                                        <label style="margin-left:25px; width:150px; height:20px; color:white; text-align:center; margin-top:90px; margin-bottom:90px; font-size:20px;">
+                                            <a style="color:white;" href="@Url.Action("Messages","MyPage",new {area="" })">
+                                                <b> Mesajlar : @ms.GetDefault(m => m.Status != Core.Entity.Enum.Status.Deleted).Count</b> 
+
+                                            </a>
+
+
+
+                                        </label>
+
+                                    </div>
+                                   
+
+
+                                </div>
+
+                            }
+                            else if(kullanici.IsAdministrator==true)
+                            {
+                               <table class="table table-hover">
+                                   <thead>
+                                       <tr>
+                                           <th>Sipariş ID</th>
+                                           <th>Sipariş Tarihi</th>
+                                           <th>Durumu</th>
+                                           <th></th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       @foreach (Order item in os.GetDefault(m => m.AppUserID == kullanici.ID))
+                                       {
+                                           <tr>
+                                               <td>@item.ID</td>
+                                               <td>@item.OrderDate</td>
+                                               <td>@item.Status</td>
+                                               <td> <button id="@item.ID" class="button btn-default" onmousedown="alert('Sipariş Gönderildi')" onclick="Sil('@item.ID')">Gönderildi</button>
+                                              </td>
+                                           </tr>
+                                       }
+                                   </tbody>
+                               </table>
+                            }
+
+                        }
+                        else if (Session["oturum"] != null)
+                        {
+                            AppUser kullanici = (AppUser)Session["oturum"];
+                        OrderDetailService ods = new OrderDetailService();
+                        OrderService os = new OrderService();
+                        ProductService ps = new ProductService();
+                        AppUserService aus = new AppUserService();
+                            <div class="dashboard">
+                                <div class="recent-orders">
+                                    <div class="title-buttons"> <strong><a class="btn btn-default" href="#">Bütün Siparişler</a> </strong> </div>
+                                    <a class="btn btn-default" href="#">Güncel Siparişler</a>
+                                    <div class="table-responsive">
+                                        <table class="data-table table-striped" id="my-orders-table">
+                                            <colgroup>
+                                                <col width="">
+                                                <col width="">
+                                                <col>
+                                                <col width="1">
+                                                <col width="1">
+                                                <col width="20%">
+                                            </colgroup>
+                                            <thead>
+                                                <tr class="first last">
+                                                    <th>Adı </th>
+                                                    <th>Tarih</th>
+                                                    <th>Alıcı</th>
+                                                    <th><span class="nobr">Toplam Tutar</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @foreach (OrderDetail item in ods.GetDefault(m => m.AppUserID == kullanici.ID))
+                                                {
+                                                    Product good = ps.GetByID((Guid)item.ProductID);
+                                                    Order siparis = os.GetByDefault(m => m.ID == item.OrderID);
+                                                    AppUser gadayif = aus.GetByID((Guid)item.AppUserID);
+                                                    <tr class="first odd">
+                                                        <td>@good.ProductName</td>
+                                                        <td><span class="nobr">@siparis.OrderDate</span></td>
+                                                        <td>@gadayif.Name</td>
+                                                        <td><span class="price"> @item.Price</span></td>
+
+                                                    </tr>
+
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--table-responsive-->
+                                </div>
+                                <!--recent-orders-->
+
+
+                            </div>
+
+                        }
+
+                    </div>
+                </section>
+
+                <!--col-right sidebar col-sm-3 wow bounceInUp animated-->
+            </div>
+            <!--row-->
+        </div>
+        <!--main container-->
+    </section>
+
+
+</div>
+
+@section scripts{
+    <script>
+
+        function Sil(id) {
+            $.ajax({
+                url: '/Order/Delete/' + id + '',
+                type: 'Get',
+                success: function () {
+                    return true;
+                }
+            })
+        }
+
+    $("#bilgi-guncelle").click(function () {
+    $("#guncelle").empty();
+    $(".tem").empty();
+    $(".alert").empty();
+        $(".tem").append(' <form action="/MyPage/Update/@Model.Item2.ID" method="post"> <div class="col-md-4"> <a style="background-color:#1b537c; margin-top:30px;" class="btn btn-default" id="sifre">Şifre İşlemleri</a> <ul><li><label><b>Ad:</b></label><div class="input-box">@Html.TextBoxFor(m => m.Item2.Name, new { @class = " input-text ", required = "required-entry" })</div></li><li><label><b>SoyAd:</b></label><div class="input-box">@Html.TextBoxFor(m => m.Item2.SurName, new { @class = " input-text ", required = "required-entry" })</div></li><li><label><b>Kullanıcı Adı:</b></label><div class="input-box">@Html.TextBoxFor(m => m.Item2.UserName, new { @class = " input-text ", required = "required-entry" })</div></li><li><label><b>Email Adres:</b></label><div class="input-box">@Html.TextBoxFor(m => m.Item2.EmailAddress, new { @class = " input-text ", required = "required-entry" })</div></li>                   <li>                    <label><b>Doğum Tarihi:</b></label>                    <div class="input-box">                       @Html.TextBoxFor(m => m.Item2.BirthDate, new { @class = " input-text ", required = "required-entry", type = "date" })                    </div>                </li>                </ul> <div class="form-group"> <button class="button btn-default" style="background-color:#1b537c; margin-left:120px;" type="submit">Güncelle</button></div> </div>                                     </form> ')
+        
+
+
+    $("#sifre").click(function () {
+    $(".tem").empty();
+
+    $(".tem").append(' <form action="/MyPage/Update/@Model.Item2.ID" method="post"> <div class="col-md-4"><h3>Şifre işlemleri</h3> <ul><li>     <label><b>İlk Şifre:</b></label>                    <div class="input-box">                        @Html.TextBox("ilk", null, new { @class = " input-text ", validate = " validate-password", required = "required-entry", type = "password" })                  </div>                </li>                <li>                    <label><b>Şifre:</b></label>                    <div class="input-box">                        @Html.TextBox("sifre", null, new { @class = " input-text ", validate = " validate-password", required = "required-entry", type = "password" })                     </div>                </li>                <li>                    <label><b>Şifre Tekrar:</b></label>                    <div class="input-box">                       @Html.TextBox("sifreTekrar", null, new { @class = " input-text ", validate = " validate-password", required = "required-entry", type = "password" })                     </div>                </li>            </ul> <div class="form-group"> <button class="button" style="background-color:#1b537c; margin-left:120px;" type="submit">Güncelle</button></div>       </div>  </form> ')
+    })
+    })
+
+
+
+
+
+
+
+    </script>
+}

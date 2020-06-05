@@ -1,0 +1,17 @@
+﻿@model Road
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>@ViewBag.DistrictName Mahallesine Cadde Ekle</h2>
+
+    @using (Html.BeginForm("Insert", "Road", new { id = ViewBag.DistrictID }, FormMethod.Post))
+    {
+
+        <label class="form-group">Cadde:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>

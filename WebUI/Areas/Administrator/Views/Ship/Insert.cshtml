@@ -1,0 +1,19 @@
+﻿@model Ship
+@{
+    /**/
+
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>Kargo Firması Ekle</h2>
+
+    @using (Html.BeginForm("Insert", "Ship", FormMethod.Post))
+    {
+        <label class="form-group">Firma Adı:</label>
+        @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+        <label class="form-group">Telefon Numarası:</label>
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>

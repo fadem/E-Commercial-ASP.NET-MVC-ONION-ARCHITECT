@@ -1,0 +1,20 @@
+﻿@model ImagePath
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>- @ViewBag.ProductName - Ürünü için resim ekle</h2>
+
+    @using (Html.BeginForm("Insert", "ImagePath", FormMethod.Post, new { id = ViewBag.ProductID, enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            <label>Resim Eklemek için dosyayı seçin</label>
+            <input type="file" name="resim" />
+            <button type="submit">Ekle</button>
+        </div>
+    }
+
+</div>
+
+

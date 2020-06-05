@@ -1,0 +1,20 @@
+﻿@model Category
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Administrator/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Güncelle</h2>
+
+    @using (Html.BeginForm("Update", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label class="form-group">Kategori Adı:</label>
+        @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control" })
+        <label class="form-group">Açıklaması:</label>
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        <label class="form-group">Logosu:</label>
+        <input type="file" name="resim" />
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>

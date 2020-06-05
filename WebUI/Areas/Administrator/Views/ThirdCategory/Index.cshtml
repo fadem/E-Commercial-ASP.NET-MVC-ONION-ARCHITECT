@@ -1,0 +1,56 @@
+﻿@model List<ThirdCategory>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td></td>
+                <td>Üst Kategori</td>
+                <td>Kategori Adı</td>
+                <td>Açıklaması</td>
+                <td>Durumu</td>
+                <td>Sil/Güncelle</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ThirdCategory item in Model)
+            {
+                <tr>
+                    @if (item.ImagePath != null)
+                    {
+                        <td>
+                            <img width="30" height="30" src="~/Con@tent/Uploads/ThirdCategories/@item.ImagePath" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <img width="30" height="30" src="~/Content/Uploads/Categories/logo-icon.png" />
+                        </td>
+
+                    }
+
+                    <td>@(item.SubCategory != null ? item.SubCategory.SubCategoryName : "-")</td>
+                    <td>@item.ThirdCategoryName</td>
+                    <td>@item.Description</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "ThirdCategory", new { id = item.ID }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Güncelle", "Update", "ThirdCategory", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "ThirdCategory", null, new { @class = "btn btn-default" })
+
+            </td>
+        </tr>
+    </table>
+
+</div>

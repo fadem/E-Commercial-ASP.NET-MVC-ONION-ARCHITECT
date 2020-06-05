@@ -1,0 +1,64 @@
+﻿@model AppUser
+@{
+    /**/
+
+    ViewBag.Title = "Insert";
+}
+
+
+<div class="container">
+    @using (Html.BeginForm("Insert", "AppUser", FormMethod.Post, new { @class = "col-md-6" }))
+    {
+
+        <h2>Kullanıcı Ekle</h2>
+        <label class="form-group">Adı:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control input-text", required = "required-entry" })
+        @Html.ValidationMessageFor(m => m.Name)
+        <label class="form-group">SoyAdı:</label>
+        @Html.TextBoxFor(m => m.SurName, new { @class = "form-control input-text", required = "required-entry" })
+        @Html.ValidationMessageFor(m => m.SurName)
+
+        <label class="form-group">Kullanıcı Adı:</label>
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control input-text", required = "required-entry" })
+        @Html.ValidationMessageFor(m => m.UserName)
+        <label class="form-group">Email Adresi:</label>
+        @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control input-text", required = "required-entry" })
+        @Html.ValidationMessageFor(m => m.EmailAddress)
+        <label class="form-group">Şifre:</label>
+        @Html.TextBox("Sifre",null, new { @class = "form-control input-text", required = "required-entry" })
+
+        <label class="form-group">Sifre(Tekrar):</label>
+        @Html.TextBoxFor(m => m.Password, new { @class = "form-control input-text", required = "required-entry" })
+        @Html.ValidationMessageFor(m => m.Password)
+        <label class="form-group">Telefon Numarası:</label>
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control input-text", required = "required-entry" })
+        @Html.ValidationMessageFor(m => m.Phone)
+        <label class="form-group">Doğum Tarihi:</label>
+        @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control input-text", required = "required-entry", @type = "date" })
+
+
+        <button type="submit" class="btn-success">Ekle</button>
+
+    }
+</div>
+
+
+@section scripts{
+    <script>
+
+          $("#Password").change(function () {
+                var ilk = $("#Sifre").val();
+                var son = $("#Password").val();
+              if (ilk != son) {
+                  $("#Sifre").val('');
+                    $("#Password").val('');
+                    alert("Şifreler Uyuşmuyor!!!");
+
+                    return false;
+                }
+                else
+                    return true;
+
+            })
+    </script>
+    }

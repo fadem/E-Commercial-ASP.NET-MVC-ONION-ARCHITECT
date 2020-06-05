@@ -1,0 +1,37 @@
+﻿@model SubCategory
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>Alt Kategori Ekle</h2>
+
+    @using (Html.BeginForm("Insert", "SubCategory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div class="col-md-6 container">
+        <h2>Alt Kategori Ekle</h2>
+        <ul class="form-list">
+            <li>
+                <label class="form-group">Üst Kategori Adı:</label>
+                @Html.DropDownListFor(m => m.CategoryID, null, htmlAttributes: new { @class = "input-text form-group" })
+            </li>
+            <li>
+                <label class="form-group">Kategori Adı:</label>
+                @Html.TextBoxFor(m => m.SubCategoryName, new { @class = "input-text form-group" })
+            </li>
+            <li>
+                <label class="form-group">Açıklaması:</label>
+                @Html.TextBoxFor(m => m.Description, new { @class = "input-text form-group" })
+            </li>
+            <li>
+                <label class="form-group">Kategori Resmi:</label>
+                <input type="file" name="resim" />
+            </li>
+        </ul>
+       
+       
+        <button type="submit" class="btn-success">Ekle</button>
+    </div>
+    <div class="col-md-6"></div>
+
+    }

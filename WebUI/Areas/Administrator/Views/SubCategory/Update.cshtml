@@ -1,0 +1,24 @@
+﻿@model SubCategory
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>Güncelle</h2>
+
+    @using (Html.BeginForm("Update", "SubCategory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="col-md-6">
+            <label class="form-group">Üst Kategori Adı:</label>
+            @Html.DropDownListFor(m => m.CategoryID, null, htmlAttributes: new { @class = "input-text form-control" })
+            <label class="form-group">Kategori Adı:</label>
+            @Html.TextBoxFor(m => m.SubCategoryName, new { @class = "input-text form-control" })
+            <label class="form-group">Açıklaması:</label>
+            @Html.TextBoxFor(m => m.Description, new { @class = "input-text form-control" })
+            <label class="form-group">Kategori Resmi:</label>
+            <input type="file" name="resim" />
+            <button type="submit" class="btn-success">Güncelle</button>
+        </div>
+
+    }
+</div>

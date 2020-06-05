@@ -1,0 +1,16 @@
+﻿@model RegionTo
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>@ViewBag.ProvinceName İline İlçe Ekle</h2>
+
+    @using (Html.BeginForm("Insert", "RegionTo", new { id = ViewBag.ProvinceID }, FormMethod.Post))
+    {
+
+        <label class="form-group">İlçe:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>

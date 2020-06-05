@@ -1,0 +1,20 @@
+﻿@model District
+@{
+    /**/
+
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>@ViewBag.RegionToName İlçesine ait Mahalle Ekle</h2>
+
+    @using (Html.BeginForm("Insert", "District", new { id = ViewBag.RegionToID }, FormMethod.Post))
+    {
+
+        <label class="form-group">Mahalle:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        <label class="form-group">Posta Numarası:</label>
+        @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>

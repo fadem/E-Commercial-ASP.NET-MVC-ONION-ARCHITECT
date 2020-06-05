@@ -1,0 +1,15 @@
+﻿@model Province
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>Güncelle</h2>
+
+    @using (Html.BeginForm("Update", "Province", FormMethod.Post))
+    {
+        <label class="form-group">İl:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        <button type="submit" class="btn-success">Güncelle</button>
+    }
+</div>

@@ -1,0 +1,18 @@
+﻿@model Street
+@{
+    ViewBag.Title = "Insert";
+}
+
+
+<div class="container">
+    <h2>@ViewBag.RoadName Caddesine Sokak Ekle</h2>
+
+    @using (Html.BeginForm("Insert", "Street", new { id = ViewBag.RoadID }, FormMethod.Post))
+    {
+
+        <label class="form-group">Sokak:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>

@@ -1,0 +1,40 @@
+﻿@model List<Province>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>İller</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>İl</th>
+                <th>Durumu</th>
+                <th>Sil/Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Province item in Model)
+            {
+                <tr>
+
+                    <td>@item.Name</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "Province", new { id = item.ID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Güncelle", "Update", "Province", new { id = item.ID }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("İlçeler", "Index", "RegionTo", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "Province", null, new { @class = "btn btn-info" })
+
+            </td>
+        </tr>
+    </table>
+</div>

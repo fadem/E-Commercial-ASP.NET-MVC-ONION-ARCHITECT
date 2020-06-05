@@ -1,0 +1,26 @@
+﻿@model Campaing
+@{
+    /**/
+
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>@ViewBag.ProductName ürünü için kampanya oluştur</h2>
+
+    @using (Html.BeginForm("Insert", "Campaing", FormMethod.Post, new { id = ViewBag.ProductID, AppUserID = ViewBag.AppUserID }))
+    {
+        <div class="form-group">
+            <label>Uygulanacak indirim oranı(%):</label>
+            @Html.LabelFor(m => m.Discount)
+        </div>
+        <div class="form-group">
+            <label>Açıklama:</label>
+            @Html.LabelFor(m => m.Description)
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Oluştur</button>
+        </div>
+    }
+
+</div>

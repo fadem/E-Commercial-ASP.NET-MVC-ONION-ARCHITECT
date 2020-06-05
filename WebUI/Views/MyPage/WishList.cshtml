@@ -1,0 +1,153 @@
+﻿@model List<WishList>
+@{
+    ViewBag.Title = "WishList";
+  
+}
+
+<body>
+    <div id="page">
+        <div class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-title" style="font-family:Arial;">
+                            <h2><em lang="tr" style="font-style:normal">Favorilerim</em></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="main-container col2-right-layout">
+            <div class="main container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <ul class="form-list">
+
+                            <li>
+                                <div class="input-box">
+                                    @Html.ActionLink("Hesabım", "Index", new { id = "asd" }, new { @class = "btn btn-default" })
+                                </div>
+                            </li>
+                            <li>
+                                <div class="input-box">
+                                    @Html.ActionLink("Siparişlerim", "MyOrder", "MyPage", new { id = "asd" }, new { @class = "btn btn-default" })
+                                </div>
+                            </li>
+                            <li>
+                                <div class="input-box">
+                                    @Html.ActionLink("Adreslerim", "MyAddress", new { id = "asd" }, new { @class = "btn btn-default" })
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <section class="col-main col-sm-9 col-xs-9 wow bounceInUp animated animated" style="visibility: visible;">
+                        <div class="my-account">
+
+                            <div class="my-wishlist">
+                                <form id="wishlist-view-form" action="">
+                                    <fieldset>
+                                        <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
+                                        <div class="table-responsive">
+                                            <table class="clean-table linearize-table data-table table-striped" id="wishlist-table">
+                                                <thead>
+                                                    @if (Model.Count > 0)
+                                                    {
+                                                        <tr>
+                                                            <td></td>
+                                                        </tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr class="first last">
+                                                            <th class="customer-wishlist-item-image"></th>
+                                                            <th class="customer-wishlist-item-info">Ürün Adı</th>
+                                                            <th class="customer-wishlist-item-price">Fiyat</th>
+                                                            <th class="customer-wishlist-item-cart"></th>
+                                                            <th class="customer-wishlist-item-remove"></th>
+                                                        </tr>
+                                                    }
+
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Count < 1)
+                                                    {
+                                                        <tr>
+                                                            <td colspan="5" align="center">Henüz Favorinize Eklediğiniz bir Ürün Bulunmamaktadır</td>
+                                                        </tr>
+                                                    }
+                                                    @foreach (WishList item in Model)
+                                                    {
+                                                        <tr id="item_65" class="odd">
+                                                            <td class="wishlist-cell0 customer-wishlist-item-image"><a class="product-image" href="#"> <img src="~/Content/Uploads/@item.ImagePath" width="40" height="40"> </a></td>
+                                                            <td class="wishlist-cell1 customer-wishlist-item-info">
+                                                                <h3 class="product-name"><a href="product-detail.html" title="Kalia Bumblebee Black">@item.ProductName</a></h3>
+
+                                                            </td>
+
+                                                            <td class="wishlist-cell2 customer-wishlist-item-price" data-rwd-label="Price">
+                                                                <div class="cart-cell">
+                                                                    <div class="price-box"> <span class="regular-price" id="product-price-30"> <span class="price">@item.Price</span> </span> </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="wishlist-cell3 customer-wishlist-item-cart">
+
+                                                                <a onclick="SepeteEkle('@item.ProductID')" class="btn btn-cart">
+                                                                    Sepete Ekle
+                                                                </a>
+
+
+
+
+                                                            </td>
+                                                            <td class="wishlist-cell4 customer-wishlist-item-remove last"><a href="@Url.Action("DeleteWish","MyPage",new {id=item.ID })" class="remove-item"><span><span>Sil</span></span></a></td>
+                                                        </tr>
+                                                    }
+
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </fieldset>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </section>
+                   
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+
+
+</body>
+
+@section scripts{
+    <script>
+
+        function SepeteEkle(id) {
+            $.ajax({
+                url: '/ShoppingCart/Insert/' + id + '',
+                type: 'Post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result == true) {
+                        return true;
+
+                    }
+                    else
+                        return false;
+                }
+
+            })
+        };
+    </script>
+}

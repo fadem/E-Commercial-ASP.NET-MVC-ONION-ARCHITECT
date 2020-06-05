@@ -1,0 +1,39 @@
+﻿@model List<Colour>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>Renkler</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Renk</th>
+                <th>Durumu</th>
+                <th>Sil/Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Colour item in Model)
+            {
+                <tr>
+
+                    <td>@item.ProductColour</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "Colour", new { id = item.ID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Güncelle", "Update", "Colour", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "Colour", null, new { @class = "btn btn-info" })
+
+            </td>
+        </tr>
+    </table>
+</div>

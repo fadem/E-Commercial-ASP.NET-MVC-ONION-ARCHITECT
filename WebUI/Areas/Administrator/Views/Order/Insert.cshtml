@@ -1,0 +1,202 @@
+﻿@model Order
+@{
+    ViewBag.Title = "Insert";
+
+
+}
+<style>
+
+  
+    .adres {
+        color: white;
+        width: 280px;
+        text-decoration:double;
+    }
+
+    .buton {
+        width: 280px;
+        margin-left: 40px;
+    }
+</style>
+<div class="container">
+    <h2>Sipariş Oluştur</h2>
+
+    @using (Html.BeginForm("Insert", "Order", new { appUserID = ViewBag.AppUserID }, FormMethod.Post))
+    {
+        <div class="col-md-6 ">
+            <ul class="form-list" >
+                @if (ViewBag.AppUserName != null)
+                {
+                    <li>
+                        @ViewBag.AppUserName
+                    </li>
+                }
+                else
+                {
+                    <li>Ad          :@Html.TextBoxFor(m => m.Name, new {@class= "form-control input-text" })</li>
+                    <li>Soyad       :@Html.TextBoxFor(m => m.SurName, new { @class = "form-control input-text" })</li>
+                    <li>Telefon     :@Html.TextBoxFor(m => m.Phone, new { @class = "form-control input-text" })</li>
+                    <li>Email Adres :@Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control input-text" })</li>
+
+                }
+                <li>
+                    @Html.LabelFor(m => m.Freight, $"Kargo Ücreti : {ViewBag.Freight} ₺", new { @class = "form-group" })
+                </li>
+
+                 </ul>
+        </div>
+        <div class="col-md-6">
+            <ul class="form-list">
+                <li>
+                    <label class="adres"> İL</label>
+                    @Html.DropDownListFor(m => m.ProvinceID, null, "Seçiniz", new { @class = "form-control" })
+                </li>
+                <li>
+                    <label class="adres"> İLÇE</label>
+                    @Html.DropDownListFor(m => m.RegionToID, null, new { @class = "form-control" })
+                </li>
+                <li>
+                    <label class="adres"> MAHALLE</label>
+                    @Html.DropDownListFor(m => m.DistrictID, null, new { @class = "form-control" })
+                </li>
+                <li>
+                    <label class="adres"> CADDE</label>
+                    @Html.DropDownListFor(m => m.RoadID, null, new { @class = "form-control" })
+                </li>
+                <li>
+                    <label class="adres"> SOKAK</label>
+                    @Html.DropDownListFor(m => m.StreetID, null, new { @class = "form-control" })
+                </li>
+
+                <li>
+                    <label class="adres"> BİNA</label>
+                    @Html.DropDownListFor(m => m.BuildID, null, new { @class = "form-control" })
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-12" >
+            <button class="button addresses" type="submit">Oluştur</button>
+
+        </div>
+      
+    }
+</div>
+
+
+
+@section scripts{
+
+
+    <script>
+        $(document.body).on("change", "#ProvinceID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#RegionToID");
+            $("#RegionToID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Reg' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+        $(document.body).on("change", "#RegionToID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#DistrictID");
+            $("#DistrictID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Dis' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+        $(document.body).on("change", "#DistrictID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#RoadID");
+            $("#RoadID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Roa' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+        $(document.body).on("change", "#RoadID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#StreetID");
+            $("#StreetID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Str' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+        $(document.body).on("change", "#StreetID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#BuildID");
+            $("#BuildID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Bui' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+    </script>
+}

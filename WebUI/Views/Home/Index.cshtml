@@ -1,0 +1,409 @@
+﻿@model List<Product>
+@{
+    ViewBag.Title = "Index";
+    ProductDetailService pds = new ProductDetailService();
+    ProductService ps = new ProductService();
+}
+
+
+<body>
+    <div id="page">
+     
+        <section class="main-container col2-left-layout bounceInUp animated">
+        
+            <div class="container">
+                <div class="row">
+                    <div class="col-main col-sm-9 col-sm-push-3 product-grid">
+                        <div class="pro-coloumn">
+                            <div class="category-description std">
+                                <div class="slider-items-products">
+                                    <div id="category-desc-slider" class="product-flexslider hidden-buttons">
+                                        <div class="slider-items slider-width-col1 owl-carousel owl-theme">
+
+                                            <!-- Item -->
+                                            @foreach (Category item in (List<Category>)ViewData["category"])
+                                            {
+                                                if (item.CategoryName == "GİYİM" || item.CategoryName == "ELEKTRONİK")
+                                                {
+                                                    <div class="item">
+                                                        <a href="@Url.Action("Index","Home",new {id=item.ID })"><img width="288" height="420" style="max-width:300px; max-height:420px; margin-left:300px;" alt="" src="~/Content/Uploads/@item.ImagePath"></a>
+                                                        <div class="cat-img-title cat-bg cat-box">
+                                                            <div class="small-tag"></div>
+                                                            <h2 class="cat-heading">@item.CategoryName <span></span></h2>
+                                                        </div>
+                                                    </div>
+                                                }
+
+
+
+
+                                            }
+                                        
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <article>
+                                <div class="toolbar">
+
+                                    <div class="sort-by">
+                                        <label class="left">Sırala : </label>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Seçiniz<span class=""></span></a>
+                                                <ul>
+                                                    <li><a href="@Url.Action("Index","Home",new {sirala="İsim" })">İsim</a></li>
+                                                    <li><a href="@Url.Action("Index","Home",new {sirala="Fiyat" })">Fiyat</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <a class="button-asc left" href="@Url.Action("Index","Home")" ><span class="top_arrow"></span></a>
+                                    </div>
+                                </div>
+                                <div class="category-products">
+                                    @if (ViewBag.AramaSonucSayisi != null)
+                                    {
+                                        <div class="col-md-12" style="text-align:center"> <h3>
+    Toplamda @ViewBag.AramaSonucSayisi adet ürün bulunmuştur.
+</h3></div>
+
+                                    }
+                                    <ul class="products-grid">
+                                        @if (ViewBag.UrunBulunamadi != null)
+                                        {
+                                            <li>
+                                                <h3>@ViewBag.UrunBulunamadi</h3>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            foreach (Product item in Model)
+                                            {
+                                               
+                                                <li class="item col-lg-4 col-md-3 col-sm-4 col-xs-6">
+                                                    <div class="item-inner">
+                                                        <div class="item-img">
+                                                            <div class="item-img-info">
+                                                                <a href="@Url.Action("GoodsDetail", "Home", new { id = item.ID, area = "" })" title="@item.ProductName " class="product-image">
+
+                                                                    @foreach (ImagePath item1 in (List<ImagePath>)ViewBag.ProductImage)
+                                                                    {
+                                                                        if (item1.ProductID == item.ID)
+                                                                        {
+                                                                            for (int i = 0; i < 1; i++)
+                                                                            {
+                                                                                <img style="max-height:400px; max-width:300px; min-height:400px; min-width:300px;" src="~/Content/Uploads/@item1.ProductImage">
+                                                                            }
+                                                                            break;
+
+                                                                        }
+                                                                    }
+
+                                                                </a>
+
+                                                                <div class="item-box-hover">
+                                                                    <div class="box-inner">
+                                                                        @if (Session["oturum"] == null && Session["admin"] == null)
+                                                                        {
+                                                                            <div class="actions">
+                                                                                <span class="add-to-links">
+                                                                                    <button onclick="FavoriEkle('@item.ID',' Favori Eklemek için Üye Olmalısınız')" type="submit" class="link-wishlist"></button>
+                                                                                </span>
+                                                                            </div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <div class="actions">
+                                                                                <span class="add-to-links">
+                                                                                    <button onclick="FavoriEkle('@item.ID','')" type="submit" class="link-wishlist"></button>
+                                                                                </span>
+                                                                            </div>
+
+                                                                        }
+
+
+
+
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="add_cart">
+                                                                <button class="button btn-cart" onclick="SepeteEkle(id='@item.ID')">
+                                                                    Sepete Ekle
+                                                                </button>
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="item-info">
+                                                            <div class="info-inner">
+                                                                <div class="item-title"><a href="@Url.Action("GoodsDetail", "Home", new { id = item.ID, area = "" })" title="@item.ProductName ">@item.ProductName</a> </div>
+                                                                <div class="item-content">
+                                                                    <div class="rating">
+                                                                        <div class="ratings">
+                                                                            <div class="rating-box">
+                                                                                <div class="rating" style="width:80%"></div>
+                                                                            </div>
+                                                                            <p class="rating-links"><a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="item-price">
+                                                                        <div class="price-box"><span class="regular-price"><span class="price">@item.UnitPrice</span> </span> </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </li>
+                                            }
+
+                                        }
+
+                                    </ul>
+                                </div>
+                            </article>
+                        </div>
+                 
+                    </div>
+                    <aside class="col-left sidebar col-sm-3 col-xs-12 col-sm-pull-9 wow bounceInUp animated">
+                     
+                        <div class="side-nav-categories"  lang="tr" style="font-family:Arial;">
+                            <div class="block-title"> Kategoriler </div>
+                         
+                            <div class="box-content box-category" style="font-family:Arial;" lang="tr">
+                                <ul>
+                                    @foreach (Category item in (List<Category>)ViewData["category"])
+                                    {
+                                        if (item.CategoryName == "Giyim")
+                                        {
+
+                                            <li>
+                                                <a class="active" href="@Url.Action("Index","Home",new {id=item.ID })" style="font-family:'Times New Roman';" lang="tr">@item.CategoryName</a> <span class="subDropdown minus"></span>
+                                                <ul class="level0_415" style="display:block">
+                                                    @foreach (SubCategory item1 in (List<SubCategory>)ViewData["subcategory"])
+                                                    {
+                                                        if (item1.CategoryID == item.ID)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Index","Home",new {id=item1.ID })"> @item1.SubCategoryName</a> <span class="subDropdown plus"></span>
+                                                                <ul class="level1" style="display:none">
+                                                                    @foreach (ThirdCategory item2 in (List<ThirdCategory>)ViewData["thirdcategory"])
+                                                                    {
+                                                                        if (item2.SubCategoryID == item1.ID)
+                                                                        {
+                                                                            <li> <a href="@Url.Action("Index","Home",new {id=item2.ID })"><span>@item2.ThirdCategoryName</span></a> </li>
+
+                                                                        }
+                                                                    }
+
+                                                                </ul>
+
+                                            
+                                                            </li>
+                                                        }
+                                               
+                                                    }
+
+                                          
+
+                                                </ul>
+                                   
+                                            </li>
+                                        }
+
+                                    }
+                                    @foreach (Category item in (List<Category>)ViewData["category"])
+                                    {
+                                        if (item.CategoryName != "Giyim")
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Index","Home",new {id=item.ID })" style="font-family:Arial;"><b>@item.CategoryName</b></a> <span class="subDropdown plus"></span>
+                                                <ul class="level0_415">
+                                                    @foreach (SubCategory item1 in (List<SubCategory>)ViewData["subcategory"])
+                                                    {
+                                                        if (item1.CategoryID == item.ID)
+                                                        {
+                                                            <li>
+                                                                <a href="@Url.Action("Index","Home",new {id=item1.ID })"> @item1.SubCategoryName </a> <span class="subDropdown minus"></span>
+                                                                <ul class="level1" style="display:none">
+                                                                    @foreach (ThirdCategory item2 in (List<ThirdCategory>)ViewData["thirdcategory"])
+                                                                    {
+                                                                        if (item2.SubCategoryID == item1.ID)
+                                                                        {
+                                                                            <li> <a href="@Url.Action("Index","Home",new {id=item2.ID })"><span>@item2.ThirdCategoryName</span></a> </li>
+
+                                                                        }
+
+                                                                    }
+
+
+
+                                                                </ul>
+                                                       
+                                                            </li>
+
+                                                        }
+
+                                                    }
+                                        
+
+
+                                                </ul>
+                                         
+                                            </li>
+
+                                        }
+
+                                    }
+                               
+
+                                </ul>
+                            </div>
+                    
+                        </div>
+                
+                        <div class="block block-layered-nav" lang="tr">
+                            <div class="block-title" >Filtrele </div>
+                            <div class="block-content">
+                                <p class="block-subtitle">Seçenekler</p>
+                                <dl id="narrow-by-list">
+                                    <dt class="odd">Fiyat</dt>
+                                    <dd class="odd">
+                                        <ol>
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="0-100" })"><span class="price">0.00</span> - <span class="price">100</span></a> (@ps.GetDefault(m=> m.UnitPrice>0 && m.UnitPrice<100).Count) </li>
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="100+" })"><span class="price">100.00</span> ve üzeri</a> (@ps.GetDefault(m=> m.UnitPrice>100).Count) </li>
+                                        </ol>
+                                    </dd>
+                                    
+                                    <dt class="odd">Renk</dt>
+                                    <dd class="odd">
+                                        <ol>
+                                           
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="Yeşil" })">Yeşil</a> (@pds.GetDefault(m=> m.Colour.ProductColour=="Yeşil").Count) </li>
+
+                                            
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="Beyaz" })">Beyaz</a> (@pds.GetDefault(m => m.Colour.ProductColour == "Beyaz").Count) </li>
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="Siyah" })">Siyah</a> (@pds.GetDefault(m => m.Colour.ProductColour == "Siyah").Count) </li>
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="Gri" })">Gri</a> (@pds.GetDefault(m => m.Colour.ProductColour == "Gri").Count) </li>
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="Mavi" })">Mavi</a> (@pds.GetDefault(m => m.Colour.ProductColour == "Mavi").Count) </li>
+                                        </ol>
+                                    </dd>
+                                    <dt class="last even">Beden</dt>
+                                    <dd class="last even">
+                                        <ol>
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="S" })">Small</a> (@pds.GetDefault(m => m.SizeTo.ProductSize == "S" || m.SizeTo.ProductSize =="Small" ).Count) </li>
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="M" })">Medium</a> (@pds.GetDefault(m => m.SizeTo.ProductSize == "M" || m.SizeTo.ProductSize == "Medium").Count) </li>
+                                            <li> <a href="@Url.Action("Index","Home", new {filtre="L" })">Large</a> (@pds.GetDefault(m => m.SizeTo.ProductSize == "L" || m.SizeTo.ProductSize == "Large").Count) </li>
+                                        </ol>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </aside>
+              
+                </div>
+           
+            </div>
+          
+        </section>
+      
+
+
+
+
+    </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+</body>
+
+
+
+
+@section scripts{
+    <script>
+
+       
+        function SepeteEkle(id) {
+            $(".add_cart").hide("fast");
+            $(".add_cart").show("slow");
+            $.ajax({
+                url: '/ShoppingCart/Insert/' + id + '',
+                type: 'Post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result == true) {
+                        return true;
+
+                    }
+                    else
+                        return false;
+                }
+
+            })
+        };
+
+        $(".box-inner").mouseleave(function () {
+            $(".alert-danger").empty();
+        })
+      
+
+        var sayi = "0";
+        function FavoriEkle(id, mesaj) {
+            
+            if (mesaj != '') {
+                if (sayi == "1") {
+                    $(".alert-danger").empty();
+                    sayi = "0";
+                }
+                sayi = "1";
+                $(".box-inner").append(' <div class="alert-danger">' + mesaj + ' @Html.ActionLink("Üye OL","Login","Login") veya  @Html.ActionLink("Giriş Yapın", "Login", "Login") </div>');
+
+            }
+            $(".actions").hide("fast");
+            $(".actions").show("slow");
+
+                         $.ajax({
+                    url: '/MyPage/AddWish/' + id + '',
+                    type: 'Get',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        return true;
+
+
+
+
+                    }
+
+                })
+
+
+
+
+        }
+
+
+    </script>
+
+}
+
+

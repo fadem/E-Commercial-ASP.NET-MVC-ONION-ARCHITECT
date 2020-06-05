@@ -1,0 +1,52 @@
+﻿@model List<ProductDetail>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>Ürün Detayı - @ViewBag.ProductName</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Bedeni</th>
+                <th>Rengi</th>
+                <th>Stok Miktarı</th>
+                <th>Durumu</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count > 0)
+            {
+                foreach (ProductDetail item in Model)
+                {
+                    <tr>
+                        <td>@(item.SizeTo != null ? item.SizeTo.ProductSize : "-")</td>
+                        <td>@(item.Colour != null ? item.Colour.ProductColour : "-")</td>
+                        <td>@item.UnitInStock</td>
+                        <td>@item.Status</td>
+                        <td>
+                            @Html.ActionLink("Sil", "Delete", "ProductDetail", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                            @Html.ActionLink("Güncelle", "Update", "ProductDetail", new { id = item.ID }, new { @class = "btn btn-default" })
+                            @Html.ActionLink("Resim Ekle", "Insert", "ImagePath", new { id = item.ProductID }, new { @class = "btn btn-default" })
+
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5">
+                        Ürüne Ait Hernagi bir detay bulunmamaktadır, eklemek için aşağıda  bulunan "Ekle" butonuna tıklayın.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.ActionLink("Ekle", "Insert", "ProductDetail", new { id = ViewBag.ProductID }, new { @class = "btn btn-default" })
+
+</div>

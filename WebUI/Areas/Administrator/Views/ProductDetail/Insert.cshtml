@@ -1,0 +1,23 @@
+﻿@model ProductDetail
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+   
+    <h2> @ViewBag.ProductName'e Detay Ekle</h2>
+
+    @using (Html.BeginForm("Insert", "ProductDetail", FormMethod.Post))
+    {
+    <div class="input-box">
+
+
+        <label>Bedeni:</label> @Html.DropDownListFor(m => m.SizeToID, null,"", htmlAttributes: new { @class = "input-text" })
+        <label>Rengi:</label>@Html.DropDownListFor(m => m.ColourID, null,     "", htmlAttributes: new { @class = "input-text" })
+        <label>Stok Miktarı:</label>@Html.TextBoxFor(m => m.UnitInStock, new { @class = "qty-holder", type = "number", min = "1", max = "20" })
+
+    </div>
+
+        <button type="submit">Ekle</button>
+    }
+</div>

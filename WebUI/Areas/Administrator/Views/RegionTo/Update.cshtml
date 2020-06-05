@@ -1,0 +1,17 @@
+﻿@model RegionTo
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>İlçe Güncelle</h2>
+
+    @using (Html.BeginForm("Update", "RegionTo", FormMethod.Post))
+    {
+        <label class="form-group">Üst Kategori Adı:</label>
+        @Html.DropDownListFor(m => m.ProvinceID, null, htmlAttributes: new { @class = "form-control" })
+        <label class="form-group">İlçe:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        <button type="submit" class="btn-success">Güncelle</button>
+    }
+</div>

@@ -1,0 +1,409 @@
+﻿@{
+    AppUserService aus = new AppUserService();
+    CategoryService cs = new CategoryService();
+    SubCategoryService ss = new SubCategoryService();
+    ThirdCategoryService ts = new ThirdCategoryService();
+    ProductService ps = new ProductService();
+    ImagePathService imgs = new ImagePathService();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>TrendSen</title>
+    <meta name="viewport" content="width=device-width , initial-scale=1.0 , maximum-scale=1.0 , user-scalable=no">
+    <meta name="description" content="Default Description">
+    <meta name="keywords" content="fashion, store, E-commerce">
+    <meta name="robots" content="*">
+    <link rel="icon" href="#" type="image/x-icon">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+    <link href="~/Content/template/stylesheet/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/template/stylesheet/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" type="text/css" href="~/Content/template/stylesheet/revslider.css">
+
+    <link rel="stylesheet" type="text/css" href="~/Content/template/stylesheet/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/template/stylesheet/owl.theme.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/template/stylesheet/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/template/stylesheet/jquery.mobile-menu.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/template/stylesheet/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="~/Content/template/stylesheet/responsive.css" media="all">
+    <link rel="stylesheet" href="https://use.typekit.net/hxi4fbo.css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,600,800,400' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i,900" rel="stylesheet">
+    <meta name="viewport" content="initial-scale=1.0, width=device-width">
+
+
+
+</head>
+
+<body class="cms-index-index cms-home-page">
+    <div id="page">
+    
+        <header>
+           
+            <div id="header">
+                <div class="header-container container">
+                    <div class="row">
+                        <div class="logo" style="background-color:white;">
+                            <a href="@Url.Action("Index","Home", new {id="" ,area=""})" title="index">
+                                <div>
+                                    <img  style="margin-top:10px" width="230" height="70"; src="~/Content/Site-Logo.png" />
+                                </div>
+                            </a>
+                        </div>
+                        <div class="fl-nav-menu">
+
+                            <nav>
+                                <div class="mm-toggle-wrap">
+                                    <div class="mm-toggle"><i class="icon-align-justify"></i><span class="mm-label">Menu</span> </div>
+                                </div>
+                                <div class="nav-inner">
+                                
+                                    <ul id="nav" class="hidden-xs">
+                                        <li class="active">
+
+                                            <a class="level-top" href="@Url.Action("Index","Home", new {id="", area=""})"><span >Anasayfa</span></a>
+                                        </li>
+                                        <li class="mega-menu">
+                                            <a class="level-top" href="@Url.Action("Index","Home",new {id=cs.GetByDefault(m=> m.CategoryName=="Giyim").ID , area=""})"><span>Giyim</span></a>
+                                            <div class="level0-wrapper dropdown-6col">
+                                                <div class="container">
+                                                    <div class="level0-wrapper2">
+                                                        <div class="col-1">
+                                                            <div class="nav-block nav-block-center">
+                                                                <ul class="level0">
+                                                                    @foreach (SubCategory item in ss.GetAll())
+                                                                    {
+                                                                        if (item.Category.CategoryName == "GİYİM")
+                                                                        {
+                                                                            <li class="level3 nav-6-1 parent item">
+                                                                                <a href="@Url.Action("Index","Home",new {id=item.ID , area="" })"><span style="font-family:'Arial'">@item.SubCategoryName</span></a>
+                                                                                <ul class="level1">
+                                                                                    @foreach (ThirdCategory item1 in ts.GetAll())
+                                                                                    {
+                                                                                        if (item1.SubCategoryID == item.ID)
+                                                                                        {
+                                                                                            <li class="level2 nav-6-1-1"> <a href="@Url.Action("Index","Home",new {id=item1.ID , area="" })"><span style="font-family:'Arial'">@item1.ThirdCategoryName</span></a> </li>
+                                                                                        }
+
+                                                                                    }
+
+                                                                                </ul>
+                                                                            </li>
+
+                                                                        }
+
+
+
+                                                                    }
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="menu_image">
+                                                                @foreach (Category item in cs.GetAll())
+                                                                {
+                                                                    if (item.CategoryName == "GİYİM")
+                                                                    {
+                                                                        <img src="~/Content/Uploads/@item.ImagePath" />
+
+                                                                    }
+
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="mega-menu">
+                                            <a class="level-top" href="@Url.Action("Index","Home",new {id=cs.GetByDefault(m=> m.CategoryName=="Elektronik").ID })"><span>Elektronik‎</span></a>
+                                            <div class="level0-wrapper dropdown-6col">
+                                                <div class="container">
+                                                    <div class="level0-wrapper2">
+                                                        <div class="nav-block nav-block-center">
+                                                            <ul class="level0">
+                                                                @foreach (SubCategory item in ss.GetAll())
+                                                                {
+                                                                    if (item.Category.CategoryName == "ELEKTRONİK")
+                                                                    {
+                                                                        <li class="level3 nav-6-1 parent item">
+                                                                            <a href="@Url.Action("Index","Home",new {id=item.ID , area=""})"><span style="font-family:'Arial'">@item.SubCategoryName</span></a>
+                                                                            <ul class="level1">
+                                                                                @foreach (ThirdCategory item1 in ts.GetAll())
+                                                                                {
+                                                                                    if (item1.SubCategoryID == item.ID)
+                                                                                    {
+                                                                                        <li class="level2 nav-6-1-1"> <a href="@Url.Action("Index","Home",new {id=item1.ID , area="" })"><span style="font-family:'Arial'">@item1.ThirdCategoryName</span></a> </li>
+                                                                                    }
+
+                                                                                }
+
+
+                                                                            </ul>
+                                                                        </li>
+
+                                                                    }
+
+
+
+                                                                }
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                        </li>
+                                        <li class="mega-menu">
+                                            <a class="level-top" href="@Url.Action("Index","Home" , new {id=cs.GetByDefault(m=> m.CategoryName=="Takı & Aksesuar").ID })"><span>Takı & Aksesuar </span></a>
+                                            <div class="level0-wrapper dropdown-6col">
+                                                <div class="container">
+                                                    <div class="level0-wrapper2">
+                                                        <div class="nav-block nav-block-center">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="mega-menu"> <a class="level-top" href="@Url.Action("Index","Home" , new {id=cs.GetByDefault(m=> m.CategoryName=="Ayakkabı").ID })"><span>Ayakkabı</span></a> </li>
+                                        
+                                        <li>
+                                            @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = " container" }))
+                                            {
+                                                <div class="form-group">
+
+                                                    <input id="arama" name="arama" type="text" class="input-text glyphicon-search" onkeypress = "return event.charCode >= 64 && event.charCode<=90 || event.charCode >= 97 && event.charCode<=122 " placeholder="Arayınız" value=""/>
+                                                    <button class="btn " type="submit" style=" width:50px;margin-top:-4px;  border-radius:50px; height:42px;">Ara</button>
+
+                                                </div>
+                                            }
+                                        </li>
+
+
+
+                                    </ul>
+
+                                </div>
+                            </nav>
+                        </div>
+
+                        <div class="fl-header-right">
+
+                            <div class="fl-links">
+                                <div class="no-js">
+                                    <a class="clicker"></a>
+                                    <div class="fl-nav-links">
+                                        <ul class="links">
+
+
+                                            @if (Session["oturum"] != null)
+                                            {
+                                                AppUser gelen = (AppUser)Session["oturum"];
+
+
+                                                <li><a href="@Url.Action("Index","MyPage",new {id=gelen.ID , area="" })" title="Hesabım">@gelen.Name</a></li>
+                                                <li><a href="@Url.Action("WishList","MyPage",new {id=gelen.ID , area="" })" title="Favorilerim">Favorilerim</a></li>
+                                                <li class="last"><a href="@Url.Action("Logout","Login",new { area="" })" title="Çıkış Yap"><span>Çıkış Yap</span></a></li>
+
+
+
+                                            }
+                                            else if (Session["admin"] != null)
+                                            {
+
+                                                AppUser gelen = (AppUser)Session["admin"];
+
+
+                                                <li><a href="@Url.Action("Index","MyPage",new {id=gelen.ID , area="" })" title="Hesabım">@gelen.Name</a></li>
+                                                <li><a href="@Url.Action("WishList","MyPage",new {id=gelen.ID , area="" })" title="Favorilerim">Favorilerim</a></li>
+                                                <li class="last"><a href="@Url.Action("Logout","Login",new { area="" })" title="Çıkış Yap"><span>Çıkış Yap</span></a></li>
+                                            }
+                                            else
+                                            {
+                                                <li><a href="@Url.Action("Login","Login", new {area="" })" title="Hesabım">Hesabım</a></li>
+                                                <li><a href="@Url.Action("Login","Login", new {area="" })" title="Favorilerim">Favorilerim</a></li>
+                                                <li class="last"><a href="@Url.Action("Login","Login", new {area="" })" title="Giriş"><span>Giriş Yap</span></a></li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fl-cart-contain">
+
+                                <div class="mini-cart">
+
+                                    <div class="basket"> <a href="@Url.Action("Index","ShoppingCart" ,new {area="" })"></a> </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+
+        @RenderBody()
+
+
+        <footer>
+            <div class="footer-inner">
+                <div class="footer-middle">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-md-2 col-sm-6">
+                                <div class="footer-column">
+                                    <h4 lang="tr">Hesap Yönetimi</h4>
+                                    <ul class="links" lang="tr">
+                                        <li><a href="@Url.Action("Index","MyPage", new {area="" , id = "asd" })" title="Your Account">Hesabınız</a></li>
+                                        <li><a href="@Url.Action("WishList","MyPage", new {area="" , id = "asd" })" title="Information">Favorileriniz</a></li>
+                                        <li><a href="@Url.Action("MyAddress","MyPage", new {area="" , id = "asd" })" title="Addresses">Adresleriniz</a></li>
+                                        <li><a href="@Url.Action("MyOrder","MyPage", new {area="" , id = "asd" })" title="Order Tracking">Siparişleriniz</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+
+
+                                <img class="col-md-12" style="margin-top:100px;" src="~/Content/Site-Logo.png" />
+                            </div>
+
+                            <div class="col-md-2 col-sm-6">
+                                <div class="footer-column">
+                                    <h4 lang="tr">İletişim</h4>
+                                    <div class="contacts-info">
+                                        <address>
+                                            <i class="add-icon"></i>Ataşehir/İSTANBUL<br>
+                                            <br>
+                                        </address>
+                                        <div class="phone-footer"><i class="phone-icon"></i>0212 212 12 12</div>
+                                        <div class="email-footer"><i class="email-icon"></i><a id="mail" href="mailto:abc@example.com">TRENDSEN</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        
+        </footer>
+
+    </div>
+
+    <div id="mobile-menu">
+        <ul>
+            <li>
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = " container" }))
+                {
+                    <div class="form-group">
+
+                        <input id="arama" name="arama" type="text" class="input-text glyphicon-search"  placeholder="Arayınız" value="" />
+                   
+
+                    </div>
+                    <button class="btn " type="submit" style=" width:190px;margin-top:-4px;  border-radius:10px; height:32px;">Ara</button>
+                }
+            </li>
+            <li>
+                <div class="home"><a href="@Url.Action("Index","Home")">Anasayfa</a> </div>
+            </li>
+            @foreach (Category item in cs.GetAll())
+            {
+
+                <li>
+                    <a href="@Url.Action("Index","Home",new {id=item.ID ,area=""})">@item.CategoryName</a> <span class="subDropdown plus"></span>
+                    <ul class="level0_415">
+                        @foreach (SubCategory item1 in ss.GetAll())
+                        {
+                            if (item1.CategoryID == item.ID)
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index","Home",new {id=item1.ID ,area=""})"> <span style="font-family:'Arial'">@item1.SubCategoryName  </span></a> <span class="subDropdown minus"></span>
+                                    <ul class="level1" style="display:none">
+                                        @foreach (ThirdCategory item2 in ts.GetAll())
+                                        {
+                                            if (item2.SubCategoryID == item1.ID)
+                                            {
+                                                <li> <a href="@Url.Action("Index","Home",new {id=item2.ID,area="" })"><span style="font-family:'Arial'">@item2.ThirdCategoryName</span></a> </li>
+
+                                            }
+
+                                        }
+
+
+
+                                    </ul>
+                                </li>
+
+                            }
+
+                        }
+
+
+                    </ul>
+                </li>
+
+
+
+            }
+
+        </ul>
+        <div class="top-links">
+            <ul class="links">
+
+                @if (Session["oturum"] != null)
+                {
+                    <li><a href="@Url.Action("Index","MyPage",new {id=ViewBag.AppUserID ,area="" })" title="Hesabım">@ViewBag.Username</a></li>
+                    <li><a href="@Url.Action("WishList","MyPage",new {id=ViewBag.AppUserID  ,area=""})" title="Favorilerim">Favorilerim</a></li>
+                    <li class="last"><a href="@Url.Action("Logout","Login",new {area="" })" title="Çıkış Yap"><span>Çıkış Yap</span></a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Login","Login",new {area="" })" title="Hesabım">Hesabım</a></li>
+                    <li><a href="@Url.Action("Login","Login",new {area="" })" title="Favorilerim">Favorilerim</a></li>
+                    <li class="last"><a href="@Url.Action("Login","Login",new {area="" })" title="Giriş"><span>Giriş Yap</span></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+
+   
+ 
+    <script>
+        $("#mail").click(function () {
+
+            var myWindow = window.open("/Home/SendToMail", "", "width=400,height=400, resizable=0");
+            myWindow.moveTo(600, 300);
+
+            $(".button-active").click(function () {
+                alert();
+            })
+            
+        })
+    </script>
+    <script type="text/javascript" src="~/Content/template/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/template/js/common.js"></script>
+    <script type="text/javascript" src="~/Content/template/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/Content/template/js/jquery.mobile-menu.min.js"></script>
+    <script type="text/javascript" src="~/Content/template/js/bootstrap.min.js"></script>
+    <script src="~/Content/template/js/jquery.flexslider.js"></script>
+    <script src="~/Content/template/js/cloud-zoom.js"></script>
+    <script src="~/Content/template/js/jquery.mobile-menu.min.js"></script>
+
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

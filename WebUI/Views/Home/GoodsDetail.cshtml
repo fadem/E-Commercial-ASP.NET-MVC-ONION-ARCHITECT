@@ -1,0 +1,332 @@
+﻿@model Tuple<Product, List<ProductDetail>, List<Comment>>
+@{
+    int sayi = 0;
+    ViewBag.Title = "GoodsDetail";
+}
+
+<html>
+<body>
+    <div id="page">
+        <div class="main-container col1-layout wow bounceInUp animated">
+            <div class="main">
+                <div class="col-main no-margin">
+                    <div class="product-view wow bounceInUp animated" itemscope="" itemtype="http://schema.org/Product" itemid="#product_base">
+                        <div id="messages_product_view"></div>
+                        <div class="product-essential container">
+                            <div class="row">
+
+                                <form action="#" method="post" id="product_addtocart_form">
+                                    <div class="product-img-box col-lg-6 col-sm-6 col-xs-12">
+
+                                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                                <li data-target="#myCarousel" data-slide-to="3"></li>
+                                                <li data-target="#myCarousel" data-slide-to="4"></li>
+                                            </ol>
+
+                                            <div class="carousel-inner">
+                                                @foreach (ImagePath item in (List<ImagePath>)ViewData["image"])
+                                                {
+                                                    <div class="item active">
+                                                        <img val="@{ViewBag.ID = item.ID;} " src="~/Content/Uploads/@item.ProductImage">
+                                                    </div>
+                                                    break;
+
+
+                                                }
+                                                @foreach (ImagePath item1 in (List<ImagePath>)ViewData["image"])
+                                                {
+                                                    if (item1.ID != ViewBag.ID)
+                                                    {
+                                                        <div class="item ">
+                                                            <img src="~/Content/Uploads/@item1.ProductImage">
+                                                        </div>
+                                                    }
+
+
+                                                }
+
+
+                                            </div>
+
+                                            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                                <span class="sr-only">Önceki</span>
+                                            </a>
+                                            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                                <span class="sr-only">Sonraki</span>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <div class="product-shop col-lg- col-sm-6 col-xs-12">
+
+                                        <div class="brand">@(Model.Item1.Brand != null ? Model.Item1.Brand.Name : "TrendSen")</div>
+                                        <div class="product-name">
+                                            <h1>@Model.Item1.ProductName </h1>
+                                        </div>
+                                        <div class="ratings">
+                                            @if (Session["oturum"] == null && Session["admin"] == null)
+                                            {
+                                                <p class="rating-links"> <a class="button btn" onclick="Yorum('@Model.Item1.ID','')">(@Model.Item3.Count) Yorumlar</a> <span class="separator"></span>  </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="rating-links"> <a class="button btn" onclick="Yorum('@Model.Item1.ID')">(@Model.Item3.Count) Yorumlar</a> <span class="separator"></span>  </p>
+                                            }
+
+
+                                        </div>
+                                        <div class="price-block">
+                                            <div class="price-box">
+                                                @foreach (ProductDetail item in Model.Item2)
+                                                {
+                                                    if (item.UnitInStock < 1)
+                                                    {
+                                                        <p class="availability out-of-stock"><span>Stok Tükendi</span></p>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="availability in-stock"><span>Stokda(@item.UnitInStock-@(item.Colour != null ? item.Colour.ProductColour : "-")/@(item.SizeTo != null ? item.SizeTo.ProductSize : "-"))</span></p>
+
+                                                    }
+
+                                                }
+                                                <p style="font-size:40px; font-family:Arial"> <span class="price-label">@Model.Item1.UnitPrice TL</span>  </p>
+
+
+
+                                            </div>
+                                        </div>
+                                        <div class="add-to-box">
+                                            <div class="add-to-cart">
+                                                <div class="pull-left">
+                                                    @if (Model.Item2.Count > 0)
+                                                    {
+                                                        foreach (ProductDetail item in Model.Item2)
+                                                        {
+                                                            if (item.UnitInStock < 1)
+                                                            {
+                                                                sayi++;
+                                                            }
+                                                        }
+                                                    }
+                                                    @if (Model.Item2.Count != sayi)
+                                                    {
+                                                        <button onclick="SepeteEkle('@Model.Item1.ID')" class="button btn-cart" title="Sepete Ekle" type="button">Sepete Ekle</button>
+                                                    }
+
+
+
+                                                    @if (Session["oturum"] == null && Session["admin"] == null)
+                                                    {
+                                                        <button onclick="FavoriEkle('@Model.Item1.ID','Favori eklemek için üye olmalısınız.')" class="button btn-share" style="height:52px;" title="Sepete Ekle" type="button">Favorilere Ekle</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button onclick="FavoriEkle('@Model.Item1.ID','')" class="button btn-share" style="height:52px;" title="Sepete Ekle" type="button">Favorilere Ekle</button>
+
+                                                    }
+
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="short-description">
+                                            <p>@Model.Item1.Description </p>
+                                        </div>
+                                        <div class="email-addto-box">
+                                            <ul class="add-to-links">
+                                                <li> </li>
+
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+
+    <div style="width:335px;"></div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
+
+
+
+    </script>
+</body>
+</html>
+@section scripts{
+    <script>
+        var sayi = "0";
+
+         function Yorum(id, mesaj) {
+             $(".alert-danger").empty();
+
+ $(".price-block").empty();
+                $(".price-block").append(' <form action="/Home/GetComment" method="get"> <div class="yorumliste">            <table class="table">                <thead>                    <tr id="tiar">                        <th id="tihas">Yorumlar-<a class="button btn" id="yorumla">Yorum Yap</a></th>                    </tr>                </thead>                <tbody class="liste">            </tbody>            </table>        </div>    </form > ')
+
+            $.ajax({
+                url: '/Home/GetComment/' + id + '',
+                type: 'Get',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        $(".liste").append(' <tr>    <td> ' + options.Text + ' (<b>' + options.name + '</b>, ' + options.zaman + ')</td>                        </tr>   ')
+                    })
+
+                }
+             })
+
+             $("#yorumla").click(function () {
+                 if (mesaj == '') {
+
+                         $("#tihas").empty();
+
+                     $("#tihas").append('<div class="alert-danger"><h4>Yorum yapabilmek için @Html.ActionLink("Giriş Yapın", "Login", "Login") veya  @Html.ActionLink("Üye olun", "Login", "Login") </h4></div>')
+                 }
+                 else {
+
+                     $("#tihas").empty();
+
+                     $(".price-block").empty();
+                     $(".price-block").append('<div id="yorumSatiri">           <textarea class="form-control" id="MemberComment" name="MemberComment" style="font-family:sans-serif;font-size:1.2em; height:100px;  resize:none"></textarea>  <br />  <a class="button btn" id="olustur">Gönder</a>     </div>          <form action="/Home/GetComment" method="get"> <div class="yorumliste">            <table class="table">                <thead>                    <tr>                        <th id="tihas"> Yorumlar</th>                    </tr>                </thead>                <tbody class="liste">            </tbody>            </table>        </div>    </form >  ')
+                     $.ajax({
+                         url: '/Home/GetComment/' + id + '',
+                         type: 'Get',
+                         dataType: 'json',
+                         contentType: "application/json; charset=utf-8",
+                         success: function (data) {
+                             $.each(data, function (index, options) {
+                                 $(".liste").append(' <tr>    <td> ' + options.Text + ' (<b>' + options.name + '</b>, ' + options.zaman + ')</td>                        </tr>   ')
+                             })
+
+                         }
+                     })
+                     $("#olustur").click(function () {
+
+                         var yorum = $("#MemberComment").val();
+                         $("#yorumSatiri").empty();
+                         $("#tihas").empty();
+                         $("#tihas").append('<th id="tihas">Yorumlar-<a class="button btn" id="yorumla">Yorum Yap</a></th> ');
+
+                         $.ajax({
+                             url: '/Home/InsertComment/' + id + '',
+                             type: 'Get',
+                             dataType: 'json',
+                             data: { 'MemberComment': yorum },
+                             contentType: "application/json; charset=utf-8",
+                             success: function () {
+                                 $(".liste").empty();
+
+                                 $.ajax({
+                                     url: '/Home/GetComment/' + id + '',
+                                     type: 'Get',
+                                     dataType: 'json',
+                                     contentType: "application/json; charset=utf-8",
+                                     success: function (data) {
+                                         $.each(data, function (index, options) {
+                                             $(".liste").append(' <tr>    <td> ' + options.Text + ' (<b>' + options.name + '</b>, ' + options.zaman + ')</td>                        </tr>   ')
+                                         })
+                                         $("#MemberComment").val('');
+                                         $(".rating-links a").empty();
+                                         $(".rating-links a").append('(@Model.Item3.Count) Yorumlar');
+                                     }
+                                 })
+
+                             }
+                         })
+                     })
+                 }
+
+             })
+        }
+
+        function SepeteEkle(id) {
+            $(".alert-danger").empty();
+
+               $(".btn-cart").hide("fast");
+               $(".btn-cart").show("slow");
+
+            $.ajax({
+                url: '/ShoppingCart/Insert/' + id + '',
+                type: 'Post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result == true) {
+                        return true;
+
+                    }
+                    else
+                        return false;
+                }
+
+            })
+        };
+
+        $(".box-inner").mouseleave(function () {
+            $(".alert-danger").empty();
+        })
+
+
+        var sayi = "0";
+        function FavoriEkle(id, mesaj) {
+
+            if (mesaj != '') {
+                if (sayi == "1") {
+                    $(".alert-danger").empty();
+                    sayi = "0";
+                }
+                sayi = "1";
+                $(".pull-left").append(' <div class="alert-danger">' + mesaj + ' @Html.ActionLink("Üye OL","Login","Login") veya  @Html.ActionLink("Giriş Yapın", "Login", "Login") </div>');
+
+            }
+
+
+            $.ajax({
+                url: '/MyPage/AddWish/' + id + '',
+                    type: 'Get',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+                        return true;
+
+
+
+
+                    }
+
+                })
+
+
+
+
+        }
+
+
+    </script>
+}

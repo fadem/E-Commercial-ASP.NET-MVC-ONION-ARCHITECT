@@ -1,0 +1,24 @@
+﻿@model ThirdCategory
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>Alt Kategori Ekle</h2>
+
+    @using (Html.BeginForm("Insert", "ThirdCategory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div class="col-md-6">
+        <label class="form-group">Üst Kategori Adı:</label>
+        @Html.DropDownListFor(m => m.SubCategoryID, null, htmlAttributes: new { @class = "form-control input-text" })
+        <label class="form-group">Kategori Adı:</label>
+        @Html.TextBoxFor(m => m.ThirdCategoryName, new { @class = "form-control input-text" })
+        <label class="form-group">Açıklaması:</label>
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control input-text" })
+        <label class="form-group">Kategori Resmi:</label>
+        <input type="file" name="resim" />
+        <button type="submit" class="btn-success">Ekle</button>
+    </div>
+   
+    }
+</div>

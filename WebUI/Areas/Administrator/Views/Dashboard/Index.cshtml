@@ -1,0 +1,193 @@
+﻿@model AppUser
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+<div id="page">
+    <div class="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-title">
+                        <h2>Merhaba @Model.Name @Model.SurName</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="main-container col2-right-layout">
+        <div class="main container">
+            <div class="row">
+                <!--col-main col-sm-9 wow bounceInUp animated-->
+                <aside class="col-right sidebar col-sm-3 col-xs-12 wow bounceInUp animated animated" style="visibility: visible;">
+                    <div class="block block-account">
+                        <div class="block-title"> Hesabım </div>
+                        <div class="block-content">
+                            <ul>
+                                @if (Model.IsAdministrator == true)
+                                {
+                                    <li><a href="@Url.Action("MyAddress","Dashboard",new {id=Model.ID , area="Administrator"     })"><span> Adres Bilgileri</span></a></li>
+                                    <li><a href="@Url.Action("MyOrder","Dashboard",new {id=Model.ID , area="Administrator"     })"><span> Siparişlerim</span></a></li>
+                                    <li><a href="@Url.Action("Index","Product",new {id=Model.ID , area="Administrator"     })"><span> Ürünlerim</span></a></li>
+                                    <li><a href="@Url.Action("WishList","Dashboard",new {id=Model.ID , area="Administrator"     })"><span> Favorilerim</span></a></li>
+                                }
+                                else if (Model.IsPageAdmin == true)
+                                {
+
+
+                                }
+                            </ul>
+                        </div>
+
+                        <!--block-content-->
+                    </div>
+                    <div class="block block-account">
+                        <div class="block-title">Temsilci Bilgileri</div>
+                        <div class="block-content">
+
+
+
+                            <ul>
+
+                                <li><a id="bilgi-guncelle"><span>  Bilgilerimi Güncelle</span></a> </li>
+                                <li>
+                                    <label><b>Ad:  </b>@Model.Name</label>
+
+                                </li>
+                                <li>
+                                    <label><b>SoyAd:</b>@Model.SurName</label>
+
+                                </li>
+                                <li>
+                                    <label><b>Kullanıcı Adı:</b>@Model.UserName</label>
+
+                                </li>
+                                <li>
+                                    <label><b>Email Adres:</b> @Model.EmailAddress</label>
+
+                                </li>
+                                <li>
+                                    <label><b>Doğum Tarihi:</b>  @Model.BirthDate</label>
+
+                                </li>
+
+
+
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <!--block block-account-->
+
+                </aside>
+                <section class="col-main col-sm-9 col-xs-12 wow bounceInUp animated animated" style="visibility: visible;">
+                    <div class="my-account">
+
+                        <!--page-title-->
+                        <!-- BEGIN DASHBOARD-->
+                        <div class="dashboard">
+                            <div class="recent-orders">
+                                <div class="title-buttons"> <strong><a class="btn btn-default" href="#">Bütün Siparişler</a> </strong> </div>
+                                <a class="btn btn-default" href="#">Güncel Siparişler</a>
+                                <div class="table-responsive">
+                                    <table class="data-table table-striped" id="my-orders-table">
+                                        <colgroup>
+                                            <col width="">
+                                            <col width="">
+                                            <col>
+                                            <col width="1">
+                                            <col width="1">
+                                            <col width="20%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr class="first last">
+                                                <th>Sipariş ID </th>
+                                                <th>Tarih</th>
+                                                <th>Alıcı</th>
+                                                <th><span class="nobr">Toplam Tutar</span></th>
+                                                <th>Durumu</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (Order item in (List<Order>)ViewData["order"])
+                                            {
+                                                <tr class="first odd">
+                                                    <td>@item.ID</td>
+                                                    <td><span class="nobr">@item.OrderDate</span></td>
+                                                    <td>@item.AppUser.Name</td>
+                                                    @foreach (OrderDetail item1 in (List<OrderDetail>)ViewData["orderdetail"])
+                                                    {
+                                                        if (item1.Order.ID == item.ID)
+                                                        {
+                                                            <td><span class="price"> @item1.Price</span></td>
+
+                                                        }
+
+                                                    }
+                                                    <td><em>@item.Status</em></td>
+                                                    <td class="a-center last"><span class="nobr"> <a href="@Url.Action("Detail","Order",new {id=item.ID , area="Administrator"})">Görüntüle</a> </span></td>
+                                                </tr>
+
+                                            }
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--table-responsive-->
+                            </div>
+                            <!--recent-orders-->
+
+                            @using (Html.BeginForm("Update", "Dashboard", new { id = Model.ID }, FormMethod.Post))
+                            {
+
+                                <div class="container" id="guncelle">
+                                    <div class="alert">
+                                        @(ViewBag.Sifre != null ? ViewBag.Sifre : "")
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </section>
+
+                <!--col-right sidebar col-sm-3 wow bounceInUp animated-->
+            </div>
+            <!--row-->
+        </div>
+        <!--main container-->
+    </section>
+
+
+</div>
+@section scripts{
+    <script>
+        $("#bilgi-guncelle").click(function () {
+            $("#guncelle").empty();
+            $("#siparisler").empty();
+            $(".alert").empty();
+            $("#guncelle").append('<div class="col-md-4 "><a style=" margin-top:30px; margin-left:20px;" class="btn btn-default" id="sifre">Şifre İşlemleri</a> <ul><li><label><b>Ad:</b></label><div class="input-box">@Html.TextBoxFor(m=> m.Name,new { @class = " input-text ", required = "required-entry" })</div></li><li><label><b>SoyAd:</b></label><div class="input-box">@Html.TextBoxFor(m => m.SurName, new { @class = " input-text ", required = "required-entry" })</div></li><li><label><b>Kullanıcı Adı:</b></label><div class="input-box">@Html.TextBoxFor(m=> m.UserName,new { @class = " input-text ", required = "required-entry" })</div></li><li><label><b>Email Adres:</b></label><div class="input-box">@Html.TextBoxFor(m=> m.EmailAddress,new { @class = " input-text ", required = "required-entry" })</div></li>                   <li>                    <label><b>Doğum Tarihi:</b></label>                    <div class="input-box">                       @Html.TextBoxFor(m=> m.BirthDate,new { @class = " input-text ", required = "required-entry" ,type="date" })                    </div>                </li>                </ul > <div class="form-group"> <button style="padding-right:100px; margin-left:250px;" class=" col-md-4 btn btn-default" type="submit">Güncelle</button></div> </div > '
+
+            )
+            $("#sifre").click(function () {
+                $("#guncelle").empty();
+                $("#guncelle").append('<div class="col-md-4"><h3>Şifre işlemleri</h3> <ul><li>     <label><b>İlk Şifre:</b></label>                    <div class="input-box">                        @Html.TextBox("ilk",null, new { @class = " input-text ",validate= " validate-password", required = "required-entry",  type = "password" })                  </div>                </li>                <li>                    <label><b>Şifre:</b></label>                    <div class="input-box">                        @Html.TextBox("sifre", null, new { @class = " input-text ", validate = " validate-password", required = "required-entry", type = "password" })                     </div>                </li>                <li>                    <label><b>Şifre Tekrar:</b></label>                    <div class="input-box">                       @Html.TextBox("sifreTekrar", null, new { @class = " input-text ", validate = " validate-password", required = "required-entry", type = "password" })                     </div>                </li>            </ul> <div class="form-group"> <button style="padding-right:100px; margin-left:250px;" class=" col-md-4 btn btn-default" type="submit">Güncelle</button></div>       </div > ')
+            })
+        })
+
+
+
+
+
+
+
+    </script>
+}

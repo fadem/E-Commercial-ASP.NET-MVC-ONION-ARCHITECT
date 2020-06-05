@@ -1,0 +1,144 @@
+﻿@model Address
+@{
+    ViewBag.Title = "Insert";
+  
+}
+
+<div class="container">
+
+    <h2>@ViewBag.AppUserName'e  Adres Kaydı</h2>
+
+    @using (Html.BeginForm("Insert", "Address", new { id = ViewBag.AppUserID }, FormMethod.Post))
+    {
+        <label class="form-group">İl:</label>
+        @Html.DropDownListFor(m => m.ProvinceID, null, "Seçiniz", new { @class = "form-control" })
+        <label class="form-group">İlçe:</label>
+        @Html.DropDownListFor(m => m.RegionToID, null, new { @class = "form-control" })
+        <label class="form-group">Mahalle:</label>
+        @Html.DropDownListFor(m => m.DistrictID, null, new { @class = "form-control" })
+        <label class="form-group">Cadde:</label>
+        @Html.DropDownListFor(m => m.RoadID, null, new { @class = "form-control" })
+        <label class="form-group">Sokak:</label>
+        @Html.DropDownListFor(m => m.StreetID, null, new { @class = "form-control" })
+        <label class="form-group">Bina:</label>
+        @Html.DropDownListFor(m => m.BuildID, null, new { @class = "form-control" })
+
+
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>
+
+@section scripts{
+    <script>
+        $(document.body).on("change", "#ProvinceID", function () {
+
+        
+
+            var id = $(this).val();
+            var altKategori = $("#RegionToID");
+            $("#RegionToID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Reg' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text +  '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+        $(document.body).on("change", "#RegionToID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#DistrictID");
+            $("#DistrictID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Dis' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+        $(document.body).on("change", "#DistrictID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#RoadID");
+            $("#RoadID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Roa' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+        $(document.body).on("change", "#RoadID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#StreetID");
+            $("#StreetID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Str' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+        $(document.body).on("change", "#StreetID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#BuildID");
+            $("#BuildID").empty();
+            $.ajax({
+                url: '/Address/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Bui' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+    </script>
+    }

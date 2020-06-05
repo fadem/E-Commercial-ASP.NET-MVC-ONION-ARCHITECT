@@ -1,0 +1,18 @@
+﻿@model Colour
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>Ekle</h2>
+    @using (Html.BeginForm("Insert", "Colour", FormMethod.Post))
+    {
+    <div >
+        <label class="form-group">Renk Adı:</label>
+        @Html.TextBoxFor(m => m.ProductColour, new { @class = "text-center" })
+    </div>
+       
+
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>

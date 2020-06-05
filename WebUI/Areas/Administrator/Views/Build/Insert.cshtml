@@ -1,0 +1,19 @@
+﻿@model Build
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container">
+    <h2>@ViewBag.StreetName Sokağına Bina Ekle</h2>
+
+
+    @using (Html.BeginForm("Insert", "Build", new { id = ViewBag.StreetID }, FormMethod.Post))
+    {
+
+        <label class="form-group">Bina Adı:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+
+
+        <button type="submit" class="btn-success">Ekle</button>
+    }
+</div>

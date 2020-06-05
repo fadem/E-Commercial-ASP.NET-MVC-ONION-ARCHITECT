@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+
+<div class="container" style="margin:50px auto;">
+    <div class="col-md-4">
+        <img src="~/Content/Uploads/indir.png" width="300" height="300" />
+
+    </div>
+    <div class="col-md-8" >
+        <label class="col-md-12" style="text-align:center; text-decoration: double; font-size:25px; ">Ürün Yorumlarım</label>
+        <table class="col-md-12 table table-hover">
+            <thead>
+                <tr>
+                    <th>Ürün Adı</th>
+                    <th>Üye</th>
+                    <th>Yorumu</th>
+                    <th>Durumu</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ((List<Comment>)ViewData["comment"] == null)
+                {
+                    <tr>
+                        <td colspan="5" align="center">Henüz bir ürününe dair yorum bulunmamaktadır. </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (Comment item in (List<Comment>)ViewData["comment"])
+                    {
+                        <tr>
+                            <td>@item.Product.ProductName</td>
+                            <td>@item.AppUser.Name</td>
+                            <td>@item.MemberComment</td>
+                            <td>@item.Status</td>
+                            <td>
+                                @Html.ActionLink("Sil", "Delete", "Comment", new { id = item.ID }, new { @class = "form-control" })
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+        
+
+    </div>
+
+</div>

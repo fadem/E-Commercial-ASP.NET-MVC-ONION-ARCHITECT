@@ -1,0 +1,39 @@
+﻿@model List<Build>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>@ViewBag.StreetName Sokağın da bulunan Binalar</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Bina Adı</th>
+                <th>Durumu</th>
+                <th>Sil/Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (Build item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "Build", new { id = item.ID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Güncelle", "Update", "Build", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "Build", new { id = ViewBag.StreetID }, new { @class = "btn btn-info" })
+
+            </td>
+        </tr>
+    </table>
+</div>

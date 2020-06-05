@@ -1,0 +1,19 @@
+﻿@model Build
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>Güncelle</h2>
+
+    @using (Html.BeginForm("Update", "Build", FormMethod.Post))
+    {
+        <label class="form-group">Sokak:</label>
+        @Html.DropDownListFor(m => m.StreetID, null, htmlAttributes: new { @class = "form-control" })
+        <label class="form-group">Bina Adı:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+
+
+        <button type="submit" class="btn-success">Güncelle</button>
+    }
+</div>

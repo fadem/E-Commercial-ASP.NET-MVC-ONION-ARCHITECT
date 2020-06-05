@@ -1,0 +1,17 @@
+﻿@model SizeTo
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>Güncelle</h2>
+
+    @using (Html.BeginForm("Update", "SizeTo", FormMethod.Post))
+    {
+        <label class="form-group">Boyut:</label>
+        @Html.TextBoxFor(m => m.ProductSize, new { @class = "input-text" })
+
+        <button type="submit" class="btn-success">Güncelle</button>
+    }
+
+</div>

@@ -1,0 +1,29 @@
+﻿@model Brand
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div class="container  ">
+    <h2>Marka Ekleme</h2>
+
+    @using (Html.BeginForm("Insert", "Brand", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label class="form-group">Marka Adı:</label>
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { @class = "input-text" })
+
+        </div>
+        <label class="form-group">Açıklaması:</label>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+
+        </div>
+        <label class="form-group">Logosu:</label>
+        
+        <input type="file" name="resim" />
+        <button type="submit" class="btn-success">Ekle</button>
+
+    }
+
+
+</div>

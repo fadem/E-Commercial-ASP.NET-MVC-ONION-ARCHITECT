@@ -1,0 +1,40 @@
+﻿@model List<SizeTo>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>Bedenler</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Beden</th>
+                <th>Durumu</th>
+                <th>Sil/Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SizeTo item in Model)
+            {
+                <tr>
+
+                    <td>@item.ProductSize</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "SizeTo", new { id = item.ID }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Güncelle", "Update", "SizeTo", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "SizeTo", null, new { @class = "btn btn-default" })
+
+            </td>
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,17 @@
+﻿@model ImagePath
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>Resim Güncelle</h2>
+
+    @using (Html.BeginForm("Update", "ImagePath", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            <label>Resim güncellemek için dosyayı seçin</label>
+            <input type="file" name="resim" />
+            <button type="submit">Güncelle</button>
+        </div>
+    }
+</div>

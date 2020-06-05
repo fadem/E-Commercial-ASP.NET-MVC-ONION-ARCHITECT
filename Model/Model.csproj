@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9270195A-1092-4CEA-A709-64D4B8D34A96}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\ProjectContext.cs" />
+    <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Entities\Brand.cs" />
+    <Compile Include="Entities\Build.cs" />
+    <Compile Include="Entities\Campaing.cs" />
+    <Compile Include="Entities\Category.cs" />
+    <Compile Include="Entities\BrandCategory.cs" />
+    <Compile Include="Entities\Colour.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\CustomerNonMember.cs" />
+    <Compile Include="Entities\District.cs" />
+    <Compile Include="Entities\ImagePath.cs" />
+    <Compile Include="Entities\Message.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderDetail.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\ProductDetail.cs" />
+    <Compile Include="Entities\Province.cs" />
+    <Compile Include="Entities\RegionTo.cs" />
+    <Compile Include="Entities\Road.cs" />
+    <Compile Include="Entities\Ship.cs" />
+    <Compile Include="Entities\ShoppingCart.cs" />
+    <Compile Include="Entities\SizeTo.cs" />
+    <Compile Include="Entities\Street.cs" />
+    <Compile Include="Entities\SubCategory.cs" />
+    <Compile Include="Entities\ThirdCategory.cs" />
+    <Compile Include="Entities\WishList.cs" />
+    <Compile Include="Maps\AddressMap.cs" />
+    <Compile Include="Maps\AppUserMap.cs" />
+    <Compile Include="Maps\BrandMap.cs" />
+    <Compile Include="Maps\BuildMap.cs" />
+    <Compile Include="Maps\CampaingMap.cs" />
+    <Compile Include="Maps\CategoryMap.cs" />
+    <Compile Include="Maps\ColourMap.cs" />
+    <Compile Include="Maps\CommentMap.cs" />
+    <Compile Include="Maps\CustomerNonMemberMap.cs" />
+    <Compile Include="Maps\DistrictMap.cs" />
+    <Compile Include="Maps\ImagePathMap.cs" />
+    <Compile Include="Maps\MessageMap.cs" />
+    <Compile Include="Maps\OrderDetailMap.cs" />
+    <Compile Include="Maps\OrderMap.cs" />
+    <Compile Include="Maps\ProductDetailMap.cs" />
+    <Compile Include="Maps\ProductMap.cs" />
+    <Compile Include="Maps\ProvinceMap.cs" />
+    <Compile Include="Maps\RegionToMap.cs" />
+    <Compile Include="Maps\RoadMap.cs" />
+    <Compile Include="Maps\ShipMap.cs" />
+    <Compile Include="Maps\ShoppingCartMap.cs" />
+    <Compile Include="Maps\SizeToMap.cs" />
+    <Compile Include="Maps\StreetMap.cs" />
+    <Compile Include="Maps\SubCategoryMap.cs" />
+    <Compile Include="Maps\ThirdCategoryMap.cs" />
+    <Compile Include="Maps\WishListMap.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{1d905b1a-847f-4a16-a577-4f5aa2277906}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

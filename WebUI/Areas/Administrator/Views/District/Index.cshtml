@@ -1,0 +1,42 @@
+﻿@model List<District>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>@ViewBag.RegionToName İlçesine ait Mahelle ve Semtler</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Mahalle</th>
+                <th>Posta Numarası</th>
+                <th>Durumu</th>
+                <th>Sil/Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (District item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.PostalCode</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "District", new { id = item.ID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Güncelle", "Update", "District", new { id = item.ID }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Caddeler", "Index", "Road", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "District", new { id = ViewBag.RegionToID }, new { @class = "btn btn-info" })
+
+            </td>
+        </tr>
+    </table>
+</div>

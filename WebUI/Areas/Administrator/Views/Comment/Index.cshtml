@@ -1,0 +1,42 @@
+﻿@model List<Comment>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container" style="margin-bottom:50px;">
+    <h2>Yorumlarım</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ürün Adı</th>
+                <th>Yorum</th>
+                <th>Durumu</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count < 1)
+            {
+                <tr>
+                    <td colspan="3">Herhangi bir ürüne ait herhangi bir yorum bulunmamaktadır.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (Comment item in Model)
+                {
+                    <tr>
+                        <td >@item.Product.ProductName</td>
+                        <td>@item.MemberComment</td>
+                        <td>@item.Status</td>
+                        <td>
+                            @Html.ActionLink("Sil", "Delete", "Comment", new { id = item.ID }, new { @class = "btn btn-sil" ,style= "border-radius:15px; background-color: #c41f1f;" })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

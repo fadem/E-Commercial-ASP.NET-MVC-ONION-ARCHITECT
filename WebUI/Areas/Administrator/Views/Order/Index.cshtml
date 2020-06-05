@@ -1,0 +1,85 @@
+﻿@model List<Order>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>Siparişlerim</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Alıcı</th>
+                <th>Sipariş Tarihi</th>
+                <th>Hazırlanma Tarihi</th>
+                <th>Gönderme Tarihi</th>
+                <th>Kargo Firması</th>
+                <th>Fiyatı</th>
+                <th>Adres Bilgileri</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count < 1)
+            {
+                <tr>
+                    <td colspan="7" align="center">Siparişiniz bulunmamaktadır</td>
+                </tr>
+            }
+            else
+            {
+                foreach (Order item in Model)
+                {
+                    <tr>
+                        @if (item.AppUser != null)
+                        {
+                            <td>@item.AppUser.Name</td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                <ul>
+                                    <li>Adı: @item.Name </li>
+                                    <li>Soyadı: @item.SurName </li>
+                                    <li> Telefon : @item.Phone </li>
+                                    <li>Email: @item.EmailAddress </li>
+                                </ul>
+                            </td>
+                        }
+                        <td>@item.OrderDate</td>
+                        <td>@item.RequiredDate</td>
+                        <td>@item.ShippedDate</td>
+                        <td>@item.Ship.CompanyName</td>
+                        <td>@item.Freight</td>
+                        <td>
+                            @item.ShipAddress
+                            <ul>
+                                <li>
+                                    İl : @item.Province.Name
+                                </li>
+                                <li>
+                                    İlçe : @item.RegionTo.Name
+                                </li>
+                                <li>
+                                    Mahalle : @item.District.Name
+                                </li>
+                                <li>
+                                    Cadde : @item.Road.Name
+                                </li>
+                                <li>
+                                    Sokak : @item.Street.Name
+                                </li>
+                                <li>
+                                    Bina : @item.Build.Name
+                                </li>
+
+                            </ul>
+                        </td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    @Html.ActionLink("Oluştur", "Insert", "Order", new { id = ViewBag.AppUserID }, null)
+</div>

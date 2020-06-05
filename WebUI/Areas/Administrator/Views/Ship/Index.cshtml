@@ -1,0 +1,43 @@
+﻿@model List<Ship>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>Kargo Firmaları</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Firma Adı</th>
+                <th>Telefon Numarası</th>
+                <th>Durumu</th>
+                <th>Sil/Güncelle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Ship item in Model)
+            {
+                <tr>
+
+                    <td>@item.CompanyName</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "Ship", new { id = item.ID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Güncelle", "Update", "Ship", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "Ship", null, new { @class = "btn btn-info" })
+
+            </td>
+        </tr>
+    </table>
+
+
+</div>

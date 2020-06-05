@@ -1,0 +1,44 @@
+﻿@model AppUser
+@{
+    ViewBag.Title = "Update";
+}
+
+
+
+
+@using (Html.BeginForm("Update", "AppUser", FormMethod.Post))
+{
+    <div class="container">
+        <h2>Güncelle</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Adı</th>
+                    <th>Soyadı</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Email Adresi</th>
+                    <th>Telefon</th>
+                    <th>Tedarikçi Durumu</th>
+                    <th>Site Yönetimi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> @Html.TextBoxFor(m => m.Name, new { @class = "input-text" })</td>
+                    <td> @Html.TextBoxFor(m => m.SurName, new { @class = "input-text" })</td>
+                    <td>   @Html.TextBoxFor(m => m.UserName, new { @class = "input-text" })</td>
+                    <td> @Html.TextBoxFor(m => m.EmailAddress, new { @class = "input-text" })</td>
+                    <td>    @Html.TextBoxFor(m => m.Phone, new { @class = "input-text" })</td>
+                    <td> @Html.CheckBox("IsAdministrator", false)</td>
+                    <td> @Html.CheckBox("IsPageAdmin", false)</td>
+            </tbody>
+
+        </table>
+
+        <button type="submit" class="btn-success">Güncelle</button>
+
+
+    </div>
+
+}
+

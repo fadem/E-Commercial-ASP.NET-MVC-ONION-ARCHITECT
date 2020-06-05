@@ -1,0 +1,27 @@
+﻿@model Campaing
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>@ViewBag.ProductName ürünü için kampanya bilgilerini güncelleme</h2>
+
+
+    @using (Html.BeginForm("Update", "Campaing", FormMethod.Post, new { @class = "container" }))
+    {
+        <div class="form-group">
+            <label>Uygulanacak indirim oranı(%):</label>
+            @Html.LabelFor(m => m.Discount, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label>Açıklama:</label>
+            @Html.LabelFor(m => m.Description, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Güncelle</button>
+        </div>
+    }
+
+</div>
+
+

@@ -1,0 +1,104 @@
+﻿@model Product
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>Ürün Güncelle</h2>
+
+
+    @using (Html.BeginForm("Update", "Product", FormMethod.Post))
+    {
+        <div class="form-group">
+            <label>Adı:</label>
+            @Html.TextBoxFor(m => m.ProductName)
+        </div>
+        <div class="form-group">
+            <label>Fiyatı</label>
+            @Html.TextBoxFor(m => m.UnitPrice)
+
+        </div>
+        <div>
+            <label>1.Kategori:</label>
+            @Html.DropDownListFor(m => m.CategoryID, null, htmlAttributes: new { @class = "form-control" })
+
+        </div>
+        <div>
+            <label>2.Kategori:</label>
+            @Html.DropDownListFor(m => m.SubCategoryID, null, htmlAttributes: new { @class = "form-control" })
+
+        </div>
+        <div>
+            <label>3.Kategori:</label>
+            @Html.DropDownListFor(m => m.ThirdCategoryID, null, htmlAttributes: new { @class = "form-control" })
+
+        </div>
+        <div>
+            <label>Markası:</label>
+            @Html.DropDownListFor(m => m.BrandID, null, htmlAttributes: new { @class = "form-control" })
+
+        </div>
+        <div>
+            <button type="submit">Güncelle</button>
+        </div>
+
+    }
+
+</div>
+
+
+@section scripts{
+
+    <script>
+        $(document.body).on("change", "#CategoryID", function () {
+
+
+
+            var id = $(this).val();
+            var altKategori = $("#SubCategoryID");
+            $("#SubCategoryID").empty();
+            $.ajax({
+                url: '/Product/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Sub' },
+                success: function (data) {
+                    $.each(data, function (index, options) {
+                        altKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>');
+                    })
+
+                }
+            })
+
+
+        })
+
+
+        $(document.body).on("change", "#SubCategoryID", function () {
+
+
+            var id = $(this).val();
+            var ucuncuKategori = $("#ThirdCategoryID");
+            $("#ThirdCategoryID").empty();
+            $.ajax({
+                url: '/Product/Categories/',
+                type: 'Get',
+                dataType: 'json',
+                data: { 'id': id, 'durum': 'Third' },
+                success: function (data) {
+                    $.each(data, function (status, options) {
+                        ucuncuKategori.append('<option value=' + options.Value + '>' + options.Text + '</option>')
+                    })
+                }
+
+            })
+
+        })
+
+
+    </script>
+
+
+}
+
+

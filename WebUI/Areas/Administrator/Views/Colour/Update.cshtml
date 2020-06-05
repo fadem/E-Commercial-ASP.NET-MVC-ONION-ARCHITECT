@@ -1,0 +1,16 @@
+﻿@model Colour
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="container">
+    <h2>Güncelle</h2>
+
+    @using (Html.BeginForm("Update", "Colour", FormMethod.Post))
+    {
+        <label class="form-group">Renk Adı:</label>
+        @Html.TextBoxFor(m => m.ProductColour, new { @class = "form-control" })
+
+        <button type="submit" class="btn-success">Güncelle</button>
+    }
+</div>

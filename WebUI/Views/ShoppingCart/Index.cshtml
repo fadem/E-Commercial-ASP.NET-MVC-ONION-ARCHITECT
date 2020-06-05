@@ -1,0 +1,432 @@
+﻿@model Tuple<List<UrunSepeti>, List<ShoppingCart>>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<body>
+    <div class="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-title">
+                        <h2>Sepet</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container col1-layout wow bounceInUp animated">
+
+        @using (Html.BeginForm("GetOrder", "Home", FormMethod.Get))
+        {
+            <div class="main">
+                <div class="cart wow bounceInUp animated">
+
+                    <div class="table-responsive shopping-cart-tbl  container">
+                        <form action="" method="post">
+                            <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
+                            <fieldset>
+                                <table id="shopping-cart-table" class="data-table cart-table table-striped">
+                                    <colgroup>
+                                        <col width="1">
+                                        <col>
+                                        <col width="1">
+                                        <col width="1">
+                                        <col width="1">
+                                        <col width="1">
+                                        <col width="1">
+
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="first last">
+                                            <th>&nbsp;</th>
+                                            <th><span class="nobr">Ürün Adı</span></th>
+                                            <th><span class="nobr">Renk/Beden</span></th>
+                                            <th><span class="nobr">Fiyatı</span></th>
+                                            <th>Adedi</th>
+                                            <th style="font-size:22px;"><em style="color:#25bf39; ">+</em>/<em style="color:#802020; ">-</em></th>
+                                            <th>Toplam Tutarı</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        @if (Session["sepet"] != null || Model.Item2.Count > 0)
+                                        {
+                                            <tr class="first last">
+                                                <td colspan="50" class="a-right last">
+
+
+                                                    <button name="update_cart_action" value="empty_cart" title="Clear Cart" class="button btn-empty" id="empty_cart_button"><span><span>@Html.ActionLink("Sepeti Sil", "Delete", "ShoppingCart", new { gelen = "cok" }, null)</span></span></button>
+
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tfoot>
+                                    <tbody>
+
+                                        @if (Session["sepet"] != null)
+                                        {
+                                            ProductDetailService pds = new ProductDetailService();
+
+
+
+
+                                            foreach (UrunSepeti item in (List<UrunSepeti>)Session["sepet"])
+                                            {
+                                                @Html.Hidden(item.ID.ToString())
+                                                <tr>
+                                                    <td><a href="#"><img src="~/Content/Uploads/@item.PicImage" width="75"></a></td>
+                                                    <td>
+                                                        <h2 class="product-name">
+                                                            <a href="#">@item.ProductName</a>
+                                                        </h2>
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="cart-price">
+                                                            @if (item.ProductDetailID != null)
+                                                            {
+
+                                                                @Html.DropDownList("detay", pds.GetDefault(m => m.ProductID == item.ID && m.UnitInStock>0).Select(m=> new SelectListItem {
+                                                               Text=(m.Colour != null ? m.Colour.ProductColour: "-")+"-"+ (m.SizeTo != null ? m.SizeTo.ProductSize : "-") +"-Stok("+m.UnitInStock+")", Value=m.ID.ToString()
+                                                           }),$"{item.ProductColor}-{item.ProductSize}", new {@class="form-control " ,style="width:200px;", required="required-entry", onchange = $"DetayEkle('{item.ID}','detay')" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DropDownList("detay", pds.GetDefault(m => m.ProductID == item.ID && m.UnitInStock>0).Select(m=> new SelectListItem {
+                                                               Text=m.Colour.ProductColour+"-"+ m.SizeTo.ProductSize+"-Stok("+m.UnitInStock+")", Value=m.ID.ToString()
+                                                           }),"Seçiniz", new {@class="form-control " ,style="width:200px;", required= "required-entry", onchange = $"DetayEkle('{item.ID}','detay')" })
+                                                            }
+                                                        </span>
+
+
+                                                    </td>
+
+
+
+                                                    <td>
+                                                        <span class="cart-price">
+                                                            <span class="price">@item.ProductPrice</span>
+                                                        </span>
+
+
+                                                    </td>
+
+                                                    <td>
+                                                        <input name="cart[26340][qty]" value="@item.Quantity" size="4" title="Adet" class="input-text qty" readonly maxlength="12">
+
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                                            <a href="" onclick="SepeteEkle('@item.ID')" class="btn btn-secondary" style="min-width:34.02px; margin-left:0px; border-radius:10px;">+</a>
+                                                            <a href="" class="btn btn-secondary" onclick="SepeteCikar('@item.ID','eksi')" style="min-width:34.02px; margin-left:0px; border-radius:10px;">-</a>
+                                                        </div>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="cart-price">
+
+                                                            <span class="price">@($"{item.ProductPrice * item.Quantity}")</span>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+
+                                                        <a href="@Url.Action("Delete","ShoppingCart", new {id=item.ID })" class="button remove-item"><span><span>Sil</span></span></a>
+
+
+                                                    </td>
+
+
+
+
+
+
+                                                </tr>
+
+                                            }
+                                        }
+
+                                        @if (Model.Item2.Count > 0)
+                                        {
+                                            ProductDetailService pds = new ProductDetailService();
+
+                                            foreach (ShoppingCart item in Model.Item2)
+                                            {
+                                                <tr class="odd">
+                                                    <td class="image hidden-table"><a href="#" class="product-image"><img src="~/Content/Uploads/@item.PicImage" width="75"></a></td>
+                                                    <td>
+                                                        <h2 class="product-name">
+                                                            <a href="#">@item.Name</a>
+                                                        </h2>
+                                                    </td>
+
+                                                    <td class="a-right hidden-table">
+                                                        <span class="cart-price">
+                                                            @if (item.ProductDetailID != null)
+                                                            {
+                                                                @Html.DropDownList("detay", pds.GetDefault(m => m.ProductID == item.ProductID).Select(m=> new SelectListItem {
+                                                          Text=m.Colour.ProductColour+"-"+ m.SizeTo.ProductSize+"-Stok("+m.UnitInStock+")", Value=m.ID.ToString()
+                                                      }),$"{item.ProductColour}-{item.ProductSize}", new {@class="form-control " ,style="width:200px;", required="required-check", onchange = $"DetayEkle('{item.ProductID}','detay')" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DropDownList("detay", pds.GetDefault(m => m.ProductID == item.ProductID).Select(m=> new SelectListItem {
+                                                               Text=m.Colour.ProductColour+"-"+ m.SizeTo.ProductSize+"-Stok("+m.UnitInStock+")", Value=m.ID.ToString()
+                                                           }),"Seçiniz", new {@class="form-control " ,style="width:200px;", required= "required-check", onchange = $"DetayEkle('{item.ProductID}','detay')" })
+                                                            }
+
+                                                        </span>
+
+                                                    <td class="a-right hidden-table">
+                                                        <span class="cart-price">
+                                                            <span class="price">@item.Price</span>
+                                                        </span>
+
+
+                                                    </td>
+                                                    <td class="a-center movewishlist">
+                                                        <input name="cart[26340][qty]" value="@item.Quantity" size="4" title="Adet" class="input-text qty" maxlength="12">
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                                            <a href="" onclick="SepeteEkle('@item.ProductID')" class="btn btn-secondary" style="min-width:34.02px; margin-left:0px; border-radius:10px;">+</a>
+                                                            <a href="" class="btn btn-secondary" onclick="SepeteCikar('@item.ProductID','eksi')" style="min-width:34.02px; margin-left:0px; border-radius:10px;">-</a>
+                                                        </div>
+
+                                                    </td>
+                                                    <td class="a-right movewishlist">
+                                                        <span class="cart-price">
+
+                                                            <span class="price">@($"{item.Price * item.Quantity}")</span>
+                                                        </span>
+                                                    </td>
+                                                    <td class="a-center last">
+
+                                                        <a href="@Url.Action("Delete","ShoppingCart", new {id=item.ID })" class="button remove-item"><span><span>Sil</span></span></a>
+                                                    </td>
+
+
+
+
+
+                                                </tr>
+                                            }
+                                        }
+                                        else if (Session["sepet"] == null && Model.Item2.Count < 1)
+
+                                        {
+                                            if (TempData["siparis"] != null)
+                                            {
+                                                <tr>
+                                                    <td colspan="7" align="center">
+                                                        <h3>
+                                                            @TempData["siparis"]
+                                                        </h3>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="7" align="center">
+                                                        <h3>
+                                                            Sepetinizde ürün bulunmamaktadır.
+                                                        </h3>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+
+
+
+
+
+                                    </tbody>
+                                </table>
+
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <!-- BEGIN CART COLLATERALS -->
+
+
+                    <div class="cart-collaterals container">
+                        <!-- BEGIN COL2 SEL COL 1 -->
+                        <div class="row">
+
+                            <!-- BEGIN TOTALS COL 2 -->
+                            <div class="col-sm-4">
+
+
+
+                            </div>
+
+                            <div class="col-sm-4">
+
+                            </div> <!--col-sm-4-->
+
+                            <div class="col-sm-4">
+                                @if (Session["sepet"] != null)
+                                {
+                                    <div class="totals">
+                                        <h3>Sepet Toplam Tutar</h3>
+                                        <div class="inner">
+
+                                            <table id="shopping-cart-totals-table" class="table shopping-cart-table-total">
+                                                <colgroup>
+                                                    <col>
+                                                    <col width="1">
+                                                </colgroup>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td style="" class="a-left" colspan="1">
+                                                            <strong>Toplam Tutar</strong>
+                                                        </td>
+                                                        <td style="" class="a-right">
+                                                            <strong><span class="price">@Model.Item1.Sum(m => m.ProductPrice * m.Quantity)</span></strong>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+                                            <ul class="checkout">
+                                                <li>
+
+                                                    <button id="devamEt" class="button" type="submit">Devam Et</button>
+
+                                                </li>
+
+                                            </ul>
+                                        </div><!--inner-->
+                                    </div><!--totals-->
+
+                                }
+                                @if (Model.Item2.Count > 0)
+                                {
+                                    <div class="totals">
+                                        <h3>Sepet Toplam Tutar</h3>
+                                        <div class="inner">
+
+                                            <table id="shopping-cart-totals-table" class="table shopping-cart-table-total">
+                                                <colgroup>
+                                                    <col>
+                                                    <col width="1">
+                                                </colgroup>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td style="" class="a-left" colspan="1">
+                                                            <strong>Toplam Tutar</strong>
+                                                        </td>
+                                                        <td style="" class="a-right">
+                                                            <strong><span class="price">@Model.Item2.Sum(m => m.Price * m.Quantity)</span></strong>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+                                            <ul class="checkout">
+                                                <li>
+                                                    <button id="devamEt" class="button" type="submit">Devam Et</button>
+                                                </li>
+
+                                            </ul>
+                                        </div><!--inner-->
+                                    </div><!--totals-->
+
+                                }
+
+
+                            </div> <!--col-sm-4-->
+
+
+                        </div> <!--cart-collaterals-->
+
+
+                    </div>
+                </div>  <!--cart-->
+
+            </div>
+
+        }
+
+    </div> <!--col1-layout-->
+</body>
+
+
+
+
+
+
+@section scripts{
+    <script>
+
+        function SepeteEkle(id) {
+                
+
+            $.ajax({
+                url: '/ShoppingCart/Insert/' + id + '',
+                type: 'Post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result == true) {
+
+                        return true;
+
+                    }
+                    else
+                        return false;
+                }
+
+            })
+        };
+     
+        function SepeteCikar(id, durum) {
+            $.ajax({
+                url: '/ShoppingCart/Insert/' + id + '?durum=' + durum + '',
+                type: 'Post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result == true) {
+
+                        return true;
+
+                    }
+                    else
+                        return false;
+                }
+
+            })
+        };
+
+        function DetayEkle(id) {
+            var pdsID = $("#detay").val();
+            $.ajax({
+                url: '/ShoppingCart/Insert/' + id + '?productds=' + pdsID + '',
+                type: 'Post',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result == true) {
+
+                        return true;
+
+                    }
+                    else
+                        return false;
+                }
+
+            })
+        };
+    </script>
+
+}

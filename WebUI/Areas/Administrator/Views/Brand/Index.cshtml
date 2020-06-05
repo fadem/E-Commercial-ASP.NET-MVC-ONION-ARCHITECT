@@ -1,0 +1,59 @@
+﻿@model List<Brand>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>Markalar</h2>
+
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Marka Adı</th>
+                <th>Açıklaması</th>
+                <th>Durumu</th>
+                <th>Sil/Güncelle</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (Brand item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.ImagePath != null)
+                        {
+                            <img src="~/Content/Uploads/@item.ImagePath" width="30" height="30" />
+
+                        }
+                        else
+                        {
+                            <img src="~/Content/Uploads/Brands/brand-icon-png-1.png" width="30" height="30" />
+                        }
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+
+                    <td>@item.Status</td>
+                    <td>
+                        @Html.ActionLink("Sil", "Delete", "Brand", new { id = item.ID }, new { @class = "btn btn-danger" })
+
+                        @Html.ActionLink("Güncelle", "Update", "Brand", new { id = item.ID }, new { @class = "btn btn-default" })
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+        <tr>
+            <td>
+                @Html.ActionLink("Ekle", "Insert", "Brand", null, new { @class = "btn btn-default" })
+
+            </td>
+        </tr>
+
+    </table>
+
+</div>

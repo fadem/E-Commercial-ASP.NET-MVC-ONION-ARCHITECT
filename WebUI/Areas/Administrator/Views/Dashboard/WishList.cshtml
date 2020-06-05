@@ -1,0 +1,118 @@
+﻿@model List<WishList>
+@{
+    ViewBag.Title = "WishList";
+}
+
+<body>
+    <div id="page">
+        <div class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-title">
+                            <h2>Beğendiklerim</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BEGIN Main Container col2-right -->
+        <section class="main-container col2-right-layout">
+            <div class="main container">
+                <div class="row">
+                    <section class="col-main col-sm-9 col-xs-12 wow bounceInUp animated animated" style="visibility: visible;">
+                        <div class="my-account">
+
+                            <div class="my-wishlist">
+                                <form id="wishlist-view-form" action="">
+                                    <fieldset>
+                                        <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
+                                        <div class="table-responsive">
+                                            <table class="clean-table linearize-table data-table table-striped" id="wishlist-table">
+                                                <thead>
+                                                    <tr class="first last">
+                                                        <th class="customer-wishlist-item-image"></th>
+                                                        <th class="customer-wishlist-item-info">Ürün Adı</th>
+                                                        <th class="customer-wishlist-item-price">Fiyat</th>
+                                                        <th class="customer-wishlist-item-cart"></th>
+                                                        <th class="customer-wishlist-item-remove"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+
+                                                    @foreach (WishList item in Model)
+                                                    {
+                                                        if (item.Status != Core.Entity.Enum.Status.Deleted)
+                                                        {
+                                                            <tr id="item_65" class="odd">
+                                                                <td class="wishlist-cell0 customer-wishlist-item-image"><a class="product-image" href="#"> <img src="~/Content/Uploads/@item.ImagePath" width="40" height="40"> </a></td>
+                                                                <td class="wishlist-cell1 customer-wishlist-item-info">
+                                                                    <h3 class="product-name"><a href="product-detail.html" title="Kalia Bumblebee Black">@item.ProductName</a></h3>
+
+                                                                </td>
+
+                                                                <td class="wishlist-cell3 customer-wishlist-item-price" data-rwd-label="Price">
+                                                                    <div class="cart-cell">
+                                                                        <div class="price-box"> <span class="regular-price" id="product-price-30"> <span class="price">@item.Price</span> </span> </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="wishlist-cell4 customer-wishlist-item-cart">
+
+                                                                    <a class="btn btn-cart" href="@Url.Action("Insert","ShoppingCart",new {id=item.ProductID })">
+                                                                        Sepete Ekle
+                                                                    </a>
+
+
+
+
+                                                                </td>
+                                                                <td class="wishlist-cell5 customer-wishlist-item-remove last"><a href="@Url.Action("DeleteWish","Dashboard",new {id=item.ID })" class="remove-item"><span><span>Sil</span></span></a></td>
+                                                            </tr>
+
+                                                        }
+                                                        else
+                                                        {
+                                                          
+                                                                <tr id="item_65" class="odd">
+                                                                    <td colspan="5" align="center">Favorilerinize eklenmiş bir ürün bulunmamaktadır.</td>
+                                                                </tr>
+                                                           
+                                                        }
+                                                    }
+
+
+
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </fieldset>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </section>
+                    <!--col-main col-sm-9 wow bounceInUp animated-->
+                    <!--col-right sidebar col-sm-3 wow bounceInUp animated-->
+                </div>
+                <!--row-->
+            </div>
+            <!--main container-->
+        </section>
+        <!--main-container col2-left-layout-->
+        <!-- End For version 1,2,3,4,6 -->
+
+    </div>
+    <!--page-->
+    <!-- Mobile Menu-->
+    <!-- JavaScript -->
+
+
+
+</body>
+
