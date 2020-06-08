@@ -7,7 +7,7 @@ E-Commercial-ASP.NET-MVC-ONION-ARCHITECT
 - Architect:  ` ASP.NET MVC / Onion Architect `
 - Database : `  MSSQL `
 #
-Merhabalar, proje yapılırken fonksiyonel süreçleri için trendyol alış veriş sitesi baz alınmıştır, çok katmanlı(**[n-tier]()**) mimari olan "**[Onion Architect]()**" kullanılmıştır.Veri tabanı olarak MSSQL kullanılmış ve Code-First yaklaşımı ile bağlanmıştır
+Merhabalar, proje yapılırken fonksiyonel süreçleri için trendyol alış veriş sitesi baz alınmıştır, çok katmanlı(**[n-tier](https://stackify.com/n-tier-architecture/)**) mimari olan "**[Onion Architect](https://www.c-sharpcorner.com/article/onion-architecture-in-asp-net-core-mvc)**" kullanılmıştır.Veri tabanı olarak MSSQL kullanılmış ve Code-First yaklaşımı ile bağlanmıştır
 
 # Onion Mimari İçeriği ;
 
