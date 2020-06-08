@@ -19,7 +19,7 @@ Merhabalar, proje yapılırken fonksiyonel süreçleri için trendyol alış ver
 # HIZLI BAŞLANGIÇ
 - Projeyi build ediniz.
 - Veritabanı ayarlarını aşağıdaki gibi yapılandırınız.
-> [DatabaseTrendYol.sql] ile veri tabanı kurulumunu SQL Server Management ile yapınız.
+> [DatabaseTrendYol.sql](https://github.com/fadem/E-Commercial-ASP.NET-MVC-ONION-ARCHITECT/blob/master/Database/DatabaseTrendYol.sql) ile veri tabanı kurulumunu SQL Server Management ile yapınız.
 
 > Model katmanında => Model.Context yolundaki ConnectionString kendi veritabanınıza göre ayarladıkdan sonra Package Manager Console üzerinde 'update-database' komutunu çalıştırın.
 
