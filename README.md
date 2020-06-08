@@ -9,7 +9,7 @@ E-Commercial-ASP.NET-MVC-ONION-ARCHITECT
 #
 Merhabalar, proje yapılırken fonksiyonel süreçleri için trendyol alış veriş sitesi baz alınmıştır, Bir katmansal(**[n-tier]()**) mimari olan "**[Onion Architect]()**" kullanılmıştır.Veri tabanı olarak MSSQL kullanılmış ve Code-First yaklaşımı ile bağlanmıştır
 
-# Onion Architecture Contains;
+# Onion Katmansal Mimari İçeriği ;
 
 - Core Katmanında database crud operations interface ve genel yapılandırma ayarları oluşturulmuştur,
 - Model Katmanında proje kapsamında kullanılacak sınıflar ve onlara ait map'ler oluşturulmuş ve Core katmanı referans edilmiştir.
